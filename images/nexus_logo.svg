@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" width="600" height="200">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0f1e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d1a2e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0077cc;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e8a020;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="200" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- Grid lines subtle -->
+  <line x1="0" y1="100" x2="600" y2="100" stroke="#ffffff" stroke-opacity="0.03" stroke-width="1"/>
+  <line x1="300" y1="0" x2="300" y2="200" stroke="#ffffff" stroke-opacity="0.03" stroke-width="1"/>
+
+  <!-- ── NEXUS ICON: interconnected nodes ── -->
+  <!-- Connection lines first (behind nodes) -->
+  <!-- Center to Top -->
+  <line x1="100" y1="100" x2="100" y2="52" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.6"/>
+  <!-- Center to Bottom-Left -->
+  <line x1="100" y1="100" x2="62" y2="138" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.6"/>
+  <!-- Center to Bottom-Right -->
+  <line x1="100" y1="100" x2="138" y2="138" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.6"/>
+  <!-- Center to Left -->
+  <line x1="100" y1="100" x2="55" y2="100" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.6"/>
+  <!-- Center to Right -->
+  <line x1="100" y1="100" x2="145" y2="100" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.6"/>
+  <!-- Center to Top-Right -->
+  <line x1="100" y1="100" x2="138" y2="62" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.6"/>
+  <!-- Outer connections -->
+  <line x1="100" y1="52" x2="138" y2="62" stroke="#00d4ff" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="138" y1="62" x2="145" y2="100" stroke="#00d4ff" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="145" y1="100" x2="138" y2="138" stroke="#00d4ff" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="62" y1="138" x2="55" y2="100" stroke="#00d4ff" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="55" y1="100" x2="100" y2="52" stroke="#00d4ff" stroke-width="1" stroke-opacity="0.3"/>
+
+  <!-- Satellite nodes -->
+  <!-- Top -->
+  <circle cx="100" cy="48" r="5" fill="url(#nodeGrad)" filter="url(#glow)"/>
+  <!-- Top-Right -->
+  <circle cx="140" cy="60" r="4" fill="#e8a020" filter="url(#glow)" opacity="0.9"/>
+  <!-- Right -->
+  <circle cx="148" cy="100" r="5" fill="url(#nodeGrad)" filter="url(#glow)"/>
+  <!-- Bottom-Right -->
+  <circle cx="140" cy="140" r="4" fill="#e8a020" filter="url(#glow)" opacity="0.9"/>
+  <!-- Bottom-Left -->
+  <circle cx="60" cy="140" r="4" fill="url(#nodeGrad)" filter="url(#glow)" opacity="0.8"/>
+  <!-- Left -->
+  <circle cx="52" cy="100" r="5" fill="#e8a020" filter="url(#glow)" opacity="0.9"/>
+
+  <!-- Center node — main hub -->
+  <circle cx="100" cy="100" r="10" fill="url(#nodeGrad)" filter="url(#softGlow)"/>
+  <circle cx="100" cy="100" r="6" fill="#ffffff" opacity="0.95"/>
+
+  <!-- ── WORDMARK ── -->
+  <!-- NEXUS DIGITAL SOLUTIONS -->
+  <text x="185" y="88"
+    font-family="'Courier New', 'Lucida Console', monospace"
+    font-size="38"
+    font-weight="700"
+    letter-spacing="6"
+    fill="#ffffff"
+    filter="url(#glow)">NEXUS</text>
+
+  <!-- Accent line under NEXUS -->
+  <rect x="185" y="96" width="340" height="2" fill="url(#accentGrad)" rx="1"/>
+
+  <text x="186" y="120"
+    font-family="'Courier New', 'Lucida Console', monospace"
+    font-size="13"
+    font-weight="400"
+    letter-spacing="8"
+    fill="#00d4ff"
+    opacity="0.85">DIGITAL SOLUTIONS</text>
+
+  <!-- Motto -->
+  <text x="186" y="152"
+    font-family="'Courier New', 'Lucida Console', monospace"
+    font-size="10.5"
+    font-weight="300"
+    letter-spacing="3"
+    fill="#e8a020"
+    opacity="0.8">CONNECTING THE DOTS. BUILDING THE FUTURE.</text>
+
+  <!-- Corner decorative brackets -->
+  <path d="M 16 16 L 16 30 M 16 16 L 30 16" stroke="#00d4ff" stroke-width="1.5" stroke-opacity="0.4" fill="none"/>
+  <path d="M 584 16 L 584 30 M 584 16 L 570 16" stroke="#00d4ff" stroke-width="1.5" stroke-opacity="0.4" fill="none"/>
+  <path d="M 16 184 L 16 170 M 16 184 L 30 184" stroke="#00d4ff" stroke-width="1.5" stroke-opacity="0.4" fill="none"/>
+  <path d="M 584 184 L 584 170 M 584 184 L 570 184" stroke="#00d4ff" stroke-width="1.5" stroke-opacity="0.4" fill="none"/>
+</svg>

@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexus Digital Solutions | Connecting the Dots. Building the Future.</title>
+  <meta name="description" content="Nexus Digital Solutions is a PACRA-registered Zambian technology company building innovative digital products and services for Africa. Lusaka, Zambia." />
+  <meta name="keywords" content="Nexus Digital Solutions, Zambia tech, software development, fintech Zambia, digital solutions Lusaka, IT consulting Zambia" />
+  <meta property="og:title" content="Nexus Digital Solutions" />
+  <meta property="og:description" content="Connecting the Dots. Building the Future. — Zambian technology company building for Africa." />
+  <meta property="og:image" content="images/nexus_icon_512.png" />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#060E1A" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="images/nexus_icon_192.png" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C2NPXEDQBR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-C2NPXEDQBR');
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════════ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#hero">
+      <img src="images/nexus_logo.svg" alt="Nexus Digital Solutions" />
+      <div class="nav-logo-text">
+        <span class="nav-logo-main">NEXUS</span>
+        <span class="nav-logo-sub">Digital Solutions</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#why">Why Nexus</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <div class="nav-status">
+        <div class="nav-status-dot"></div>
+        <span>Online</span>
+      </div>
+      <a class="nav-cta" href="#contact">Get in Touch</a>
+      <div class="hamburger" id="hamburger" aria-label="Open menu" role="button" tabindex="0">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <button class="mobile-close" id="mobileClose" aria-label="Close menu">✕</button>
+  <div class="mobile-nav-header">// NEXUS_NAV_MENU</div>
+  <a href="about.html" class="mobile-link">About</a>
+  <a href="#services" class="mobile-link">Services</a>
+  <a href="#why" class="mobile-link">Why Nexus</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════ -->
+<section id="hero">
+  <canvas id="codeCanvas" aria-hidden="true"></canvas>
+  <div class="hero-grid-bg" aria-hidden="true"></div>
+  <div class="hero-line-h" aria-hidden="true"></div>
+  <div class="hero-line-h" aria-hidden="true"></div>
+  <div class="hero-line-v" aria-hidden="true"></div>
+  <div class="hero-orb orb-1" aria-hidden="true"></div>
+  <div class="hero-orb orb-2" aria-hidden="true"></div>
+  <div class="hero-orb orb-3" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="terminal-badge">
+        <div class="badge-dot" aria-hidden="true"></div>
+        <span>PACRA Registered ·</span>
+        <span class="badge-text">Lusaka, Zambia</span>
+      </div>
+
+      <div class="hero-eyebrow">Nexus Digital Solutions</div>
+
+      <h1 class="hero-title">
+        CONNECTING<br>
+        THE <span class="word-gold">DOTS.</span><br>
+        BUILDING THE<br>
+        <span class="word-cyan cursor-blink">FUTURE</span>
+      </h1>
+
+      <div class="hero-rule" aria-hidden="true">
+        <div class="hero-rule-line"></div>
+        <div class="hero-rule-icon">◈</div>
+        <div class="hero-rule-line" style="flex:0.3;background:linear-gradient(90deg,var(--gold),transparent)"></div>
+      </div>
+
+      <p class="hero-desc">
+        A Zambian technology company bridging communities, systems, and opportunities
+        through innovative digital products — built for Africa, ready for the world.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#services" class="btn-primary">
+          <span>Our Services</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#contact" class="btn-outline">
+          <span>Work With Us</span>
+        </a>
+      </div>
+
+      <div class="hero-stack" aria-label="Technology stack">
+        <span class="stack-pill">Next.js</span>
+        <span class="stack-pill">TypeScript</span>
+        <span class="stack-pill">React Native</span>
+        <span class="stack-pill">Python</span>
+        <span class="stack-pill">FastAPI</span>
+        <span class="stack-pill">Prisma</span>
+        <span class="stack-pill">AWS</span>
+        <span class="stack-pill">Lightning</span>
+      </div>
+
+      <div class="pacra-strip">
+        <strong>PACRA</strong> Business Name · Registered April 2026 · Zambia
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-visual-inner">
+        <div class="hero-ring"></div>
+        <div class="hero-ring"></div>
+        <div class="hero-ring"></div>
+        <div class="hero-logo-center">
+          <img src="images/nexus_logo_stacked.svg" alt="" />
+        </div>
+        <div class="hero-bracket tl"></div>
+        <div class="hero-bracket tr"></div>
+        <div class="hero-bracket bl"></div>
+        <div class="hero-bracket br"></div>
+        <div class="hero-metric">
+          <div class="hero-metric-val">100%</div>
+          <div class="hero-metric-label">Zambian-Owned</div>
+        </div>
+        <div class="hero-metric">
+          <div class="hero-metric-val">24/7</div>
+          <div class="hero-metric-label">Local Support</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Ticker / Marquee -->
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-inner" id="tickerInner">
+    <span class="ticker-item">Custom Software Development</span>
+    <span class="ticker-item gold">Cloud Infrastructure</span>
+    <span class="ticker-item">Cybersecurity & Compliance</span>
+    <span class="ticker-item gold">Telecom & API Integration</span>
+    <span class="ticker-item">AI & Data Analytics</span>
+    <span class="ticker-item gold">IT Strategy & Consulting</span>
+    <span class="ticker-item">Managed IT Services</span>
+    <span class="ticker-item gold">Digital Training</span>
+    <span class="ticker-item">Custom Software Development</span>
+    <span class="ticker-item gold">Cloud Infrastructure</span>
+    <span class="ticker-item">Cybersecurity & Compliance</span>
+    <span class="ticker-item gold">Telecom & API Integration</span>
+    <span class="ticker-item">AI & Data Analytics</span>
+    <span class="ticker-item gold">IT Strategy & Consulting</span>
+    <span class="ticker-item">Managed IT Services</span>
+    <span class="ticker-item gold">Digital Training</span>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+
+<!-- ═══════════════════════════════════════════
+     ABOUT
+═══════════════════════════════════════════ -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+
+      <div class="about-visual fade-up" aria-hidden="true">
+        <div class="about-visual-box">
+          <div class="about-corner tl"></div>
+          <div class="about-corner tr"></div>
+          <div class="about-corner bl"></div>
+          <div class="about-corner br"></div>
+          <div class="about-logo-display">
+            <img src="images/nexus_logo_stacked.svg" alt="" />
+          </div>
+        </div>
+        <div class="about-stats">
+          <div class="about-stat">
+            <div class="about-stat-val">2026</div>
+            <div class="about-stat-label">Est. Lusaka</div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat-val gold">PACRA</div>
+            <div class="about-stat-label">Registered</div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat-val">8+</div>
+            <div class="about-stat-label">Service Lines</div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat-val gold">ZMW</div>
+            <div class="about-stat-label">Local Pricing</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-text fade-up">
+        <div class="tag">About Us</div>
+        <h2 class="section-title">Built on the<br>Principle of <span class="accent">Connection</span></h2>
+        <p class="section-body">
+          Nexus Digital Solutions is a Zambian technology company incorporated in 2026 and registered
+          under PACRA. We exist to serve as the connection point between underserved communities
+          and transformative digital tools.
+        </p>
+        <p class="section-body">
+          Where millions remain excluded from formal systems and lack access to data-driven tools,
+          Nexus bridges that gap — from cloud infrastructure to AI-powered platforms, each product
+          is built with real users in mind.
+        </p>
+        <ul class="values-list">
+          <li><span class="val-icon">⚡</span><div><strong>Innovation</strong> — Embracing emerging technologies as instruments of meaningful change.</div></li>
+          <li><span class="val-icon">🤝</span><div><strong>Inclusion</strong> — Products designed for the many, accessible across all economic levels.</div></li>
+          <li><span class="val-icon">🔐</span><div><strong>Integrity</strong> — Transparent, ethical, and user-sovereign by design.</div></li>
+          <li><span class="val-icon">📈</span><div><strong>Impact</strong> — Success measured in real-world outcomes, not just revenue.</div></li>
+          <li><span class="val-icon">🏆</span><div><strong>Excellence</strong> — Clean architecture, reliable systems, thoughtful UX — always.</div></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+<!-- ═══════════════════════════════════════════
+     SERVICES
+═══════════════════════════════════════════ -->
+<section id="services">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="tag">What We Do</div>
+      <h2 class="section-title">Our <span class="accent">Services</span></h2>
+      <p>We operate across multiple technology domains — financial technology, software, AI, cloud infrastructure, and consulting — aligned with our PACRA classification.</p>
+    </div>
+
+    <div class="services-grid stagger">
+
+      <article class="service-card fade-up">
+        <span class="service-num">01</span>
+        <div class="service-icon-wrap">💻</div>
+        <h3>Custom Software Development</h3>
+        <p>Tailored web and mobile applications built with modern stacks — Next.js, TypeScript, Prisma — designed for Zambian business workflows.</p>
+      </article>
+
+      <article class="service-card fade-up">
+        <span class="service-num">02</span>
+        <div class="service-icon-wrap">☁️</div>
+        <h3>Cloud &amp; DevOps Infrastructure</h3>
+        <p>Secure, scalable cloud architecture on AWS, Azure, or local providers — with CI/CD pipelines, monitoring, and 24/7 local support.</p>
+      </article>
+
+      <article class="service-card fade-up">
+        <span class="service-num">03</span>
+        <div class="service-icon-wrap">🔐</div>
+        <h3>Cybersecurity &amp; Compliance</h3>
+        <p>Risk assessments, penetration testing, and Zambian data protection compliance to safeguard your digital assets and infrastructure.</p>
+      </article>
+
+      <article class="service-card fade-up">
+        <span class="service-num">04</span>
+        <div class="service-icon-wrap">📡</div>
+        <h3>Telecom &amp; API Integration</h3>
+        <p>SMS/USSD gateways, mobile money APIs, Africa's Talking integration, and seamless third-party connectivity solutions.</p>
+      </article>
+
+      <article class="service-card fade-up">
+        <span class="service-num">05</span>
+        <div class="service-icon-wrap">📊</div>
+        <h3>Data Analytics &amp; AI</h3>
+        <p>Machine learning models for forecasting, customer insights, and operational optimization — trained on Zambian market data.</p>
+      </article>
+
+      <article class="service-card fade-up">
+        <span class="service-num">06</span>
+        <div class="service-icon-wrap">🤝</div>
+        <h3>IT Strategy &amp; Consulting</h3>
+        <p>Technology roadmaps, digital transformation planning, and vendor management aligned with your specific business goals.</p>
+      </article>
+
+      <article class="service-card fade-up">
+        <span class="service-num">07</span>
+        <div class="service-icon-wrap">🛠️</div>
+        <h3>IT Support &amp; Managed Services</h3>
+        <p>Proactive monitoring, helpdesk support, patch management, and SLA-backed maintenance to keep your systems running.</p>
+      </article>
+
+      <article class="service-card fade-up">
+        <span class="service-num">08</span>
+        <div class="service-icon-wrap">🎓</div>
+        <h3>Digital Training &amp; Capacity Building</h3>
+        <p>Hands-on workshops, technical upskilling, and knowledge transfer programs for Zambian teams adopting new technologies.</p>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+<!-- ═══════════════════════════════════════════
+     WHY NEXUS
+═══════════════════════════════════════════ -->
+<section id="why">
+  <div class="container">
+
+    <div class="section-header fade-up" style="text-align:left;margin-bottom:3.5rem;">
+      <div class="tag">Why Choose Nexus</div>
+      <h2 class="section-title">Local Expertise.<br><span class="accent">Global</span> Standards.</h2>
+    </div>
+
+    <div class="why-inner">
+
+      <div class="why-content fade-up">
+        <p class="section-body">
+          We don't just deliver code — we deliver business outcomes. Every engagement includes
+          discovery workshops, transparent milestones, and post-launch support for long-term success.
+        </p>
+        <p class="section-body">
+          As a Zambian-owned company, we understand the regulatory, infrastructural, and cultural
+          nuances that impact technology adoption. We build solutions that work in the real Zambia.
+        </p>
+
+        <ul class="why-feature-list">
+          <li class="why-feature">
+            <div class="why-feature-icon">🇿🇲</div>
+            <div>
+              <h4>100% Zambian-Owned</h4>
+              <p>PACRA registered, locally operated, with deep roots in the Zambian market and economy.</p>
+            </div>
+          </li>
+          <li class="why-feature">
+            <div class="why-feature-icon">💬</div>
+            <div>
+              <h4>24/7 Local Support</h4>
+              <p>On-the-ground support team with response SLAs — not offshore ticket queues.</p>
+            </div>
+          </li>
+          <li class="why-feature">
+            <div class="why-feature-icon">🔒</div>
+            <div>
+              <h4>Security-First Architecture</h4>
+              <p>ISO-aligned security practices baked into every product from the ground up.</p>
+            </div>
+          </li>
+          <li class="why-feature">
+            <div class="why-feature-icon">💰</div>
+            <div>
+              <h4>Transparent ZMW Pricing</h4>
+              <p>Clear, milestone-based billing in Zambian Kwacha. No surprises. No hidden fees.</p>
+            </div>
+          </li>
+        </ul>
+
+        <a href="#contact" class="btn-primary" style="margin-top:2rem;">
+          <span>Start a Project</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+
+      <div class="stats-panel fade-up">
+        <div class="stats-panel-header">
+          <div class="stats-panel-title">// NEXUS_METRICS</div>
+          <div class="stats-dots" aria-hidden="true">
+            <div class="stats-dot"></div>
+            <div class="stats-dot"></div>
+            <div class="stats-dot"></div>
+          </div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <span class="stat-num">100%</span>
+            <span class="stat-label">Zambian-Owned</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num gold">24/7</span>
+            <span class="stat-label">Local Support</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">ISO</span>
+            <span class="stat-label">Security-First</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num gold">ZMW</span>
+            <span class="stat-label">Transparent Pricing</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+<!-- ═══════════════════════════════════════════
+     CONTACT
+═══════════════════════════════════════════ -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header fade-up" style="text-align:left;margin-bottom:3.5rem;">
+      <div class="tag">Contact</div>
+      <h2 class="section-title">Let's <span class="accent">Connect</span></h2>
+    </div>
+
+    <div class="contact-grid">
+
+      <!-- Contact Info -->
+      <div class="fade-up">
+        <p class="section-body" style="margin-bottom:2rem;">
+          Ready to build something meaningful? Whether you're a business looking for a technology
+          partner, a developer wanting to collaborate, or an investor — we'd love to hear from you.
+        </p>
+
+        <a class="contact-detail contact-clickable" href="https://maps.google.com/?q=Lusaka,Zambia" target="_blank" rel="noopener noreferrer">
+          <div class="contact-icon" aria-hidden="true">📍</div>
+          <div class="contact-info">
+            <h4>Location</h4>
+            <span>Lusaka, Zambia</span>
+          </div>
+          <svg class="contact-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </a>
+
+        <a class="contact-detail contact-clickable" href="https://wa.me/260965956772" target="_blank" rel="noopener noreferrer">
+          <div class="contact-icon" aria-hidden="true">📞</div>
+          <div class="contact-info">
+            <h4>Phone / WhatsApp</h4>
+            <span>+260 965 956 772</span>
+          </div>
+          <svg class="contact-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </a>
+
+        <a class="contact-detail contact-clickable" href="mailto:nexusdigitalsolutions.zm@gmail.com">
+          <div class="contact-icon" aria-hidden="true">✉️</div>
+          <div class="contact-info">
+            <h4>Email</h4>
+            <span>nexusdigitalsolutions.zm@gmail.com</span>
+          </div>
+          <svg class="contact-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </a>
+
+        <div class="contact-detail">
+          <div class="contact-icon" aria-hidden="true">🏛</div>
+          <div class="contact-info">
+            <h4>Registration</h4>
+            <span>PACRA Business Name — Reg. April 2026</span>
+          </div>
+        </div>
+
+        <div class="social-links" role="list" aria-label="Social media links">
+          <a class="social-link" href="https://www.facebook.com/share/1Ks3XhV6J7/" target="_blank" rel="noopener noreferrer" role="listitem" aria-label="Facebook">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+            <span>Facebook</span>
+          </a>
+          <a class="social-link" href="https://www.instagram.com/nexus_digital_solutions_1/" target="_blank" rel="noopener noreferrer" role="listitem" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+            <span>Instagram</span>
+          </a>
+          <a class="social-link" href="https://wa.me/260965956772" target="_blank" rel="noopener noreferrer" role="listitem" aria-label="WhatsApp">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            <span>WhatsApp</span>
+          </a>
+          <a class="social-link" href="https://github.com/Simeon-Mwale" target="_blank" rel="noopener noreferrer" role="listitem" aria-label="GitHub">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+            <span>GitHub</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="fade-up">
+        <div class="contact-form-wrap">
+          <div class="form-header">Send us a message</div>
+          <form class="contact-form" id="contactForm" action="https://formspree.io/f/mkoynllz" method="POST" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fname">First Name</label>
+                <input type="text" id="fname" name="fname" placeholder="Chanda" required autocomplete="given-name" />
+              </div>
+              <div class="form-group">
+                <label for="lname">Last Name</label>
+                <input type="text" id="lname" name="lname" placeholder="Mwansa" required autocomplete="family-name" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email Address</label>
+              <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" />
+            </div>
+            <div class="form-group">
+              <label for="service">Service of Interest</label>
+              <select id="service" name="service">
+                <option value="">— Select a service —</option>
+                <option>Custom Software Development</option>
+                <option>Cloud &amp; DevOps Infrastructure</option>
+                <option>Cybersecurity &amp; Compliance</option>
+                <option>Telecom &amp; API Integration</option>
+                <option>Data Analytics &amp; AI</option>
+                <option>IT Strategy &amp; Consulting</option>
+                <option>IT Support &amp; Managed Services</option>
+                <option>Digital Training &amp; Capacity Building</option>
+                <option>Other / General Inquiry</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" placeholder="Tell us about your project or inquiry…" required></textarea>
+            </div>
+            <button type="submit" class="btn-submit" id="submitBtn">
+              <span>Send Message</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <p class="form-note" id="formNote" role="status" aria-live="polite">
+              ✓ Message received — we'll be in touch within 24 hours.
+            </p>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <img src="images/nexus_logo.svg" alt="Nexus Digital Solutions" />
+      </div>
+      <div class="footer-copy">
+        © 2026 Nexus Digital Solutions · Lusaka, Zambia<br>
+        Connecting the Dots. Building the Future.
+      </div>
+      <div class="footer-pacra">PACRA Registered Business Name</div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- WhatsApp Float Button -->
+<a href="https://wa.me/260965956772" target="_blank" rel="noopener noreferrer" class="wa-float" aria-label="Chat with us on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+
+<script>
+(function() {
+  'use strict';
+
+  /* ── Navbar scroll ── */
+  const navbar = document.getElementById('navbar');
+  let lastScroll = 0;
+  window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    navbar.classList.toggle('scrolled', y > 40);
+    lastScroll = y;
+  }, { passive: true });
+
+  /* ── Mobile nav ── */
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  const mobileClose = document.getElementById('mobileClose');
+
+  function openMenu() {
+    mobileNav.classList.add('open');
+    hamburger.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu() {
+    mobileNav.classList.remove('open');
+    hamburger.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  hamburger.addEventListener('click', openMenu);
+  hamburger.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' ') openMenu(); });
+  mobileClose.addEventListener('click', closeMenu);
+  document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', closeMenu));
+  mobileNav.addEventListener('click', e => { if(e.target === mobileNav) closeMenu(); });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeMenu(); });
+
+  /* ── Scroll animations ── */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  /* ── Active nav highlight ── */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+    navLinks.forEach(a => {
+      const isActive = a.getAttribute('href') === '#' + current;
+      a.style.color = isActive ? 'var(--cyan)' : '';
+    });
+  }, { passive: true });
+
+  /* ── Contact form ── */
+  const form = document.getElementById('contactForm');
+  const formNote = document.getElementById('formNote');
+  const submitBtn = document.getElementById('submitBtn');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Basic client-side validation
+      const required = form.querySelectorAll('[required]');
+      let valid = true;
+      required.forEach(field => {
+        if (!field.value.trim()) {
+          field.style.borderColor = '#f87171';
+          valid = false;
+        } else {
+          field.style.borderColor = '';
+        }
+      });
+      if (!valid) return;
+
+      submitBtn.querySelector('span').textContent = 'Sending…';
+      submitBtn.disabled = true;
+
+      try {
+        const res = await fetch('https://formspree.io/f/mkoynllz', {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          formNote.classList.add('show');
+          form.reset();
+          submitBtn.querySelector('span').textContent = 'Sent ✓';
+        } else {
+          submitBtn.querySelector('span').textContent = 'Error — email us directly';
+          submitBtn.disabled = false;
+        }
+      } catch {
+        submitBtn.querySelector('span').textContent = 'Error — email us directly';
+        submitBtn.disabled = false;
+      }
+    });
+
+    // Clear error border on input
+    form.querySelectorAll('input, textarea, select').forEach(field => {
+      field.addEventListener('input', () => { field.style.borderColor = ''; });
+    });
+  }
+
+  /* ── Code rain canvas ── */
+  const canvas = document.getElementById('codeCanvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let cols, drops, rafId;
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      cols = Math.floor(canvas.width / 22);
+      drops = Array(cols).fill(1).map(() => Math.random() * -50);
+    }
+
+    const chars = '01アイウエオカキクケコNEXUSZAMBIA<>{}[]|\\/-_=+';
+
+    function draw() {
+      ctx.fillStyle = 'rgba(6,14,26,0.06)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#00C8E8';
+      ctx.font = '13px "Space Mono", monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const char = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(char, i * 22, drops[i] * 22);
+        if (drops[i] * 22 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i] += 0.4;
+      }
+      rafId = requestAnimationFrame(draw);
+    }
+
+    // Only run on desktop for performance
+    if (window.matchMedia('(min-width: 900px)').matches) {
+      resize();
+      draw();
+      window.addEventListener('resize', () => {
+        cancelAnimationFrame(rafId);
+        resize();
+        draw();
+      }, { passive: true });
+    }
+  }
+
+})();
+</script>
+</body>
+</html>
