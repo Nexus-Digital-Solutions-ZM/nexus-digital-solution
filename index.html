@@ -231,6 +231,10 @@
       box-shadow: 0 0 8px rgba(34,197,94,0.6);
       animation: statusPulse 2s ease-in-out infinite;
     }
+    .project-status-dot.amber {
+      background: var(--gold);
+      box-shadow: 0 0 8px rgba(240,160,48,0.6);
+    }
     .project-link {
       display: inline-flex; align-items: center; gap: 0.5rem;
       font-family: var(--font-mono);
@@ -240,6 +244,7 @@
       text-decoration: none;
       clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
       transition: var(--trans);
+      border: none; cursor: pointer;
     }
     .project-link:hover { background: var(--gold); }
     .project-link svg { transition: transform var(--trans); }
@@ -290,11 +295,20 @@
       border: 1px solid rgba(34,197,94,0.3);
       color: #22c55e; padding: 0.4rem 0.875rem;
     }
+    .case-live-badge.amber {
+      background: rgba(240,160,48,0.1);
+      border: 1px solid rgba(240,160,48,0.3);
+      color: var(--gold-bright);
+    }
     .case-live-dot {
       width: 6px; height: 6px; border-radius: 50%;
       background: #22c55e;
       box-shadow: 0 0 8px rgba(34,197,94,0.6);
       animation: statusPulse 2s ease-in-out infinite;
+    }
+    .case-live-dot.amber {
+      background: var(--gold);
+      box-shadow: 0 0 8px rgba(240,160,48,0.6);
     }
 
     /* case study body grid */
@@ -762,6 +776,59 @@
 
       <div class="projects-grid">
 
+        <!-- PROJECT CARD: NEXUS FLOW OS -->
+        <div class="project-card fade-up">
+          <div class="project-card-header">
+            <span class="project-client-badge">SaaS · Fuel &amp; Retail Operations</span>
+            <span class="project-year">2026</span>
+          </div>
+          <div class="project-logo-area">
+            <span class="project-logo-initials">FLOW</span>
+          </div>
+          <div class="project-card-body">
+            <div class="project-name">Nexus Flow OS</div>
+            <div class="project-tagline">Multi-Branch Fuel &amp; Business Operations Platform</div>
+            <p class="project-desc">
+              An operations platform built for multi-branch fuel retailers — covering attendant shift
+              management, dip-reading reconciliation, mobile money payment capture, and executive dashboards
+              with true gross margin visibility. Architected to accommodate both manual and automated
+              (forecourt hardware) data sources as sites scale up.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag">Next.js</span>
+              <span class="tech-tag">TypeScript</span>
+              <span class="tech-tag">FastAPI</span>
+              <span class="tech-tag">PostgreSQL</span>
+              <span class="tech-tag">Redis</span>
+              <span class="tech-tag">Docker</span>
+            </div>
+            <div class="project-metrics">
+              <div class="project-metric">
+                <div class="project-metric-val">Multi</div>
+                <div class="project-metric-label">Branch Ready</div>
+              </div>
+              <div class="project-metric">
+                <div class="project-metric-val">2</div>
+                <div class="project-metric-label">MoMo Rails</div>
+              </div>
+              <div class="project-metric">
+                <div class="project-metric-val">Live</div>
+                <div class="project-metric-label">Variance Alerts</div>
+              </div>
+            </div>
+          </div>
+          <div class="project-card-footer">
+            <div class="project-status">
+              <div class="project-status-dot amber"></div>
+              <span>Pilot Onboarding</span>
+            </div>
+            <button type="button" class="project-link" onclick="showPage('home');scrollToSection('contact');">
+              <span>Request a Demo</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </button>
+          </div>
+        </div>
+
         <!-- PROJECT CARD: TZDA -->
         <div class="project-card fade-up">
           <div class="project-card-header">
@@ -815,6 +882,92 @@
           </div>
         </div>
 
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Study: Nexus Flow OS -->
+  <section class="case-study-section">
+    <div class="container">
+      <div class="section-header fade-up" style="text-align:left;margin-bottom:2.5rem;">
+        <div class="tag">Case Study</div>
+        <h2 class="section-title">Deep Dive: <span class="accent">Nexus Flow OS</span></h2>
+      </div>
+
+      <div class="case-study-panel fade-up">
+        <div class="case-study-header">
+          <div class="case-study-title-group">
+            <div class="case-study-label">Case Study 002</div>
+            <div class="case-study-name">Nexus Flow OS — Multi-Branch Fuel &amp; Business Operations Platform</div>
+          </div>
+          <div class="case-live-badge amber">
+            <div class="case-live-dot amber"></div>
+            <span>In Active Development · Pilot Onboarding</span>
+          </div>
+        </div>
+
+        <div class="case-study-body">
+
+          <!-- Col 1: Brief & Challenge -->
+          <div class="case-col">
+            <div class="case-col-label">Brief &amp; Challenge</div>
+            <div class="case-item">Fuel retailers running multiple branches lack real-time visibility into shift-level cash, stock, and variance — most still rely on paper dip books and end-of-day reconciliation.</div>
+            <div class="case-item">Attendant handovers and cash drops needed a live, auditable trail instead of a manual book checked once per shift.</div>
+            <div class="case-item">Mobile money is now a standard payment method at the pump — the platform needed native support for the two dominant Zambian rails, not a bolt-on.</div>
+            <div class="case-item">Architecture had to accommodate stations at very different maturity levels — from fully manual dip readings to future forecourt hardware integration — without a rebuild.</div>
+            <div class="case-col-label" style="margin-top:1.5rem;">Tech Stack</div>
+            <div class="case-stack">
+              <span class="stack-pill">Next.js</span>
+              <span class="stack-pill">TypeScript</span>
+              <span class="stack-pill">FastAPI</span>
+              <span class="stack-pill">PostgreSQL</span>
+              <span class="stack-pill">Redis</span>
+              <span class="stack-pill">Docker</span>
+              <span class="stack-pill">nginx</span>
+            </div>
+          </div>
+
+          <!-- Col 2: Solution -->
+          <div class="case-col" style="background:rgba(10,22,40,0.6);">
+            <div class="case-col-label">Solution &amp; Execution</div>
+            <div class="case-item">Built a flexible Nozzle model that replaces hardcoded pump-meter columns — the same schema scales from a single-pump site to a multi-branch network.</div>
+            <div class="case-item">Designed a timezone-aware dynamic shift-boundary and dip-reading gate system, so shift handovers are enforced by the platform rather than trusted to a paper log.</div>
+            <div class="case-item">Implemented self-healing inventory reconciliation with threshold-based variance detection, automatically flagging incidents instead of waiting for a manual month-end review.</div>
+            <div class="case-item">Added a mobile money payment modal for attendants covering Airtel and MTN — the two payment rails already in daily use at Zambian filling stations.</div>
+            <div class="case-item">Built an executive dashboard showing true gross margin with fuel cost factored in, plus a branch-scoped finance page for revenue and expense tracking.</div>
+            <div class="case-item">Containerized the full stack with Docker Compose and nginx for consistent, repeatable deployment across branch sites.</div>
+          </div>
+
+          <!-- Col 3: Results -->
+          <div class="case-col">
+            <div class="case-col-label">Deliverables &amp; Status</div>
+            <div class="case-result">
+              <span class="case-result-icon">✅</span>
+              <div class="case-result-text"><strong>Shift &amp; Dip Workflow</strong>Dynamic shift boundaries, gated dip-reading entry</div>
+            </div>
+            <div class="case-result">
+              <span class="case-result-icon">✅</span>
+              <div class="case-result-text"><strong>Variance Detection</strong>Threshold-based incident creation, self-healing stock correction</div>
+            </div>
+            <div class="case-result">
+              <span class="case-result-icon">✅</span>
+              <div class="case-result-text"><strong>Mobile Money Payments</strong>Airtel &amp; MTN payment capture for attendants</div>
+            </div>
+            <div class="case-result">
+              <span class="case-result-icon">✅</span>
+              <div class="case-result-text"><strong>Executive Dashboard</strong>True gross margin, branch-scoped finance view</div>
+            </div>
+            <div class="case-result">
+              <span class="case-result-icon">✅</span>
+              <div class="case-result-text"><strong>Automation-Ready Architecture</strong>Built to accept forecourt hardware data alongside manual entry</div>
+            </div>
+            <div class="case-result">
+              <span class="case-result-icon">🔄</span>
+              <div class="case-result-text"><strong>Pilot Onboarding</strong>Live demos underway; not yet a completed customer deployment</div>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   </section>
