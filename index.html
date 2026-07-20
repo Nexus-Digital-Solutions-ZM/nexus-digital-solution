@@ -28,6 +28,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/consultation-form.css" />
 
   <style>
     /* ── PAGE SWITCHING ── */
@@ -423,7 +424,7 @@
         <div class="nav-status-dot"></div>
         <span>Online</span>
       </div>
-      <a class="nav-cta" href="#" onclick="showPage('home');scrollToSection('contact');return false;">Get in Touch</a>
+      <a class="nav-cta" href="#" onclick="showPage('home');scrollToSection('consult');return false;">Get in Touch</a>
       <div class="hamburger" id="hamburger" aria-label="Open menu" role="button" tabindex="0">
         <span></span><span></span><span></span>
       </div>
@@ -487,7 +488,7 @@
           <span>Our Services</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
-        <a href="#" class="btn-outline" onclick="scrollToSection('contact');return false;">
+        <a href="#" class="btn-outline" onclick="scrollToSection('consult');return false;">
           <span>Work With Us</span>
         </a>
       </div>
@@ -635,7 +636,7 @@
           <li class="why-feature"><div class="why-feature-icon">🔒</div><div><h4>Security-First Architecture</h4><p>ISO-aligned security practices baked into every product from the ground up.</p></div></li>
           <li class="why-feature"><div class="why-feature-icon">💰</div><div><h4>Transparent ZMW Pricing</h4><p>Clear, milestone-based billing in Zambian Kwacha. No surprises. No hidden fees.</p></div></li>
         </ul>
-        <a href="#" class="btn-primary" style="margin-top:2rem;" onclick="scrollToSection('contact');return false;">
+        <a href="#" class="btn-primary" style="margin-top:2rem;" onclick="scrollToSection('consult');return false;">
           <span>Start a Project</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -739,6 +740,171 @@
   </div>
 </section>
 
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════
+     CONSULTATION REQUEST — Two-step wizard
+═══════════════════════════════════════════ -->
+<section class="consult-section" id="consult">
+  <div class="container">
+    <div class="consult-inner">
+
+      <div class="section-header fade-up" style="text-align:left;margin-bottom:2.5rem;">
+        <div class="tag">Get Started</div>
+        <h2 class="section-title">Request a <span class="accent">Free Consultation</span></h2>
+        <p style="color:var(--muted);font-size:0.95rem;margin-top:0.5rem;">
+          Tell us what you're solving for — we'll come back with a plan, not a sales pitch.
+        </p>
+      </div>
+
+      <div class="consult-panel fade-up">
+
+        <div class="consult-header">
+          <div class="consult-eyebrow">NEXUS_CONSULT_REQUEST</div>
+          <h3 class="consult-title" id="consultTitle">Step 1 — Your Priorities</h3>
+
+          <div class="consult-steps" aria-hidden="true">
+            <div class="consult-step is-active" id="consultStepInd1">
+              <span class="consult-step-num">1</span>
+              <span>Priorities</span>
+            </div>
+            <div class="consult-step-track" id="consultTrack"></div>
+            <div class="consult-step" id="consultStepInd2">
+              <span class="consult-step-num">2</span>
+              <span>Your Details</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="consult-body">
+
+          <form id="consultForm" novalidate>
+
+            <!-- ── STEP 1 ── -->
+            <div class="consult-step-panel is-active" id="consultStep1" role="group" aria-labelledby="consultTitle">
+              <span class="consult-field-label">What are your immediate priorities? <span class="consult-required">*</span></span>
+              <p class="consult-field-hint">Select everything that applies — this shapes how we scope the consult.</p>
+
+              <div class="consult-priority-grid">
+                <div class="consult-priority">
+                  <input type="checkbox" id="pr1" name="priorities" value="Reduce losses & fraud" />
+                  <label for="pr1"><span class="consult-priority-box" aria-hidden="true"></span>Reduce operational losses &amp; fraud</label>
+                </div>
+                <div class="consult-priority">
+                  <input type="checkbox" id="pr2" name="priorities" value="Automate manual processes" />
+                  <label for="pr2"><span class="consult-priority-box" aria-hidden="true"></span>Automate manual processes</label>
+                </div>
+                <div class="consult-priority">
+                  <input type="checkbox" id="pr3" name="priorities" value="Real-time visibility & reporting" />
+                  <label for="pr3"><span class="consult-priority-box" aria-hidden="true"></span>Real-time visibility &amp; reporting</label>
+                </div>
+                <div class="consult-priority">
+                  <input type="checkbox" id="pr4" name="priorities" value="Scale across multiple branches" />
+                  <label for="pr4"><span class="consult-priority-box" aria-hidden="true"></span>Scale across multiple branches</label>
+                </div>
+                <div class="consult-priority">
+                  <input type="checkbox" id="pr5" name="priorities" value="Mobile money / payments integration" />
+                  <label for="pr5"><span class="consult-priority-box" aria-hidden="true"></span>Mobile money / payments integration</label>
+                </div>
+                <div class="consult-priority">
+                  <input type="checkbox" id="pr7" name="priorities" value="Interested in piloting Nexus Flow OS" />
+                  <label for="pr7"><span class="consult-priority-box" aria-hidden="true"></span>Interested in piloting Nexus Flow OS</label>
+                </div>
+                <div class="consult-priority">
+                  <input type="checkbox" id="pr6" name="priorities" value="Not sure yet — general inquiry" />
+                  <label for="pr6"><span class="consult-priority-box" aria-hidden="true"></span>Not sure yet — general inquiry</label>
+                </div>
+              </div>
+              <p class="consult-error" id="consultPriorityError" role="alert"></p>
+
+              <div class="consult-input-group">
+                <label class="consult-field-label" for="consultCity">Where is your office? <span class="consult-required">*</span></label>
+                <input type="text" class="consult-input" id="consultCity" name="city" placeholder="e.g. Lusaka, Zambia" required />
+                <p class="consult-error" id="consultCityError" role="alert"></p>
+              </div>
+
+              <div class="consult-actions">
+                <button type="button" class="consult-btn-back" disabled>← Back</button>
+                <button type="button" class="consult-btn-next" id="consultNextBtn">
+                  <span>Continue</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- ── STEP 2 ── -->
+            <div class="consult-step-panel" id="consultStep2" role="group" aria-labelledby="consultTitle">
+              <div class="consult-input-row">
+                <div class="consult-input-group">
+                  <label class="consult-field-label" for="consultFirst">First Name <span class="consult-required">*</span></label>
+                  <input type="text" class="consult-input" id="consultFirst" name="fname" placeholder="Chanda" required autocomplete="given-name" />
+                </div>
+                <div class="consult-input-group">
+                  <label class="consult-field-label" for="consultLast">Last Name <span class="consult-required">*</span></label>
+                  <input type="text" class="consult-input" id="consultLast" name="lname" placeholder="Mwansa" required autocomplete="family-name" />
+                </div>
+              </div>
+
+              <div class="consult-input-group">
+                <label class="consult-field-label" for="consultEmail">Email Address <span class="consult-required">*</span></label>
+                <input type="email" class="consult-input" id="consultEmail" name="email" placeholder="you@example.com" required autocomplete="email" />
+              </div>
+
+              <div class="consult-input-row">
+                <div class="consult-input-group">
+                  <label class="consult-field-label" for="consultPhone">Phone / WhatsApp</label>
+                  <input type="tel" class="consult-input" id="consultPhone" name="phone" placeholder="+260…" autocomplete="tel" />
+                </div>
+                <div class="consult-input-group">
+                  <label class="consult-field-label" for="consultCompany">Company</label>
+                  <input type="text" class="consult-input" id="consultCompany" name="company" placeholder="Optional" autocomplete="organization" />
+                </div>
+              </div>
+
+              <p class="consult-error" id="consultStep2Error" role="alert"></p>
+
+              <div class="consult-actions">
+                <button type="button" class="consult-btn-back" id="consultBackBtn">← Back</button>
+                <button type="submit" class="consult-btn-submit" id="consultSubmitBtn">
+                  <span>Request Consultation</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+            </div>
+
+          </form>
+
+          <!-- ── SUCCESS ── -->
+          <div class="consult-success" id="consultSuccess" role="status" aria-live="polite">
+            <div class="consult-success-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <div class="consult-success-title">Request received</div>
+            <p class="consult-success-body">We'll review your priorities and follow up within 24 hours to schedule your free consultation.</p>
+          </div>
+
+        </div>
+
+        <div class="consult-trust">
+          <div class="consult-trust-item">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+            <span>No obligation</span>
+          </div>
+          <div class="consult-trust-item">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span>Reply within 24hrs</span>
+          </div>
+          <div class="consult-trust-item">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z"/></svg>
+            <span>PACRA registered</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
 </div><!-- end #nx-home -->
 
 
@@ -820,9 +986,9 @@
           <div class="project-card-footer">
             <div class="project-status">
               <div class="project-status-dot amber"></div>
-              <span>Pilot Onboarding</span>
+              <span>Pilot Open</span>
             </div>
-            <button type="button" class="project-link" onclick="showPage('home');scrollToSection('contact');">
+            <button type="button" class="project-link" onclick="showPage('home');scrollToSection('consult');">
               <span>Request a Demo</span>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
             </button>
@@ -902,7 +1068,7 @@
           </div>
           <div class="case-live-badge amber">
             <div class="case-live-dot amber"></div>
-            <span>In Active Development · Pilot Onboarding</span>
+            <span>In Active Development · Pilot Open</span>
           </div>
         </div>
 
@@ -963,7 +1129,7 @@
             </div>
             <div class="case-result">
               <span class="case-result-icon">🔄</span>
-              <div class="case-result-text"><strong>Pilot Onboarding</strong>Live demos underway; not yet a completed customer deployment</div>
+              <div class="case-result-text"><strong>Pilot Open</strong>Not yet piloted — open to onboarding a first pilot partner</div>
             </div>
           </div>
 
@@ -1065,7 +1231,7 @@
       <h2 class="section-title">Want to Be Our<br><span class="accent">Next</span> Case Study?</h2>
       <p style="color:var(--muted);max-width:480px;margin:0 auto 2rem;font-size:0.95rem;">We're ready to build your next digital product — from concept to deployment.</p>
       <div class="cta-actions">
-        <a href="#" class="btn-primary" onclick="showPage('home');scrollToSection('contact');return false;">
+        <a href="#" class="btn-primary" onclick="showPage('home');scrollToSection('consult');return false;">
           <span>Start a Project</span>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
@@ -1312,5 +1478,6 @@
 
 })();
 </script>
+<script src="js/consultation-form.js"></script>
 </body>
 </html>

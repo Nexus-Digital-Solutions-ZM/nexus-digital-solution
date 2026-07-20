@@ -1,0 +1,4142 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+css/
+  consultation-form.css
+  style.css
+images/
+  nexus_icon_192.png
+  nexus_icon_512.png
+  nexus_icon_square.svg
+  nexus_logo_dark.png
+  nexus_logo_light.png
+  nexus_logo_light.svg
+  nexus_logo_stacked.png
+  nexus_logo_stacked.svg
+  nexus_logo.svg
+js/
+  consultation-form.js
+.gitignore
+about.html
+favicon.ico
+index.html
+nexus_favicon.ico
+robots.txt
+sitemap.xml
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="css/consultation-form.css">
+/* ═══════════════════════════════════════════
+   CONSULTATION REQUEST — Two-step wizard
+   Drop-in stylesheet. Uses the same custom
+   properties already defined in css/style.css
+   (--cyan, --gold, --navy, --navy-mid, --navy-light,
+   --border, --muted, --white, --glass, --trans,
+   --font-mono). No new variables introduced.
+═══════════════════════════════════════════ */
+
+.consult-section {
+  padding: 6rem 0;
+  border-top: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.consult-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 20% 0%, rgba(0,200,232,0.05), transparent 60%);
+  pointer-events: none;
+}
+
+.consult-inner {
+  position: relative; z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.consult-panel {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+.consult-panel::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--cyan), var(--gold), var(--cyan));
+  background-size: 200% 100%;
+  animation: consultShimmer 4s linear infinite;
+}
+@keyframes consultShimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+@media (prefers-reduced-motion: reduce) {
+  .consult-panel::before { animation: none; }
+}
+
+/* ── Header / progress ── */
+.consult-header {
+  padding: 2rem 2.5rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.consult-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.consult-eyebrow::before { content: '// '; }
+
+.consult-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
+}
+
+.consult-steps {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.consult-step {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: var(--trans);
+}
+.consult-step-num {
+  width: 22px; height: 22px;
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: var(--trans);
+}
+.consult-step.is-active .consult-step-num {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: rgba(0,200,232,0.08);
+}
+.consult-step.is-active { color: var(--white); }
+.consult-step.is-done .consult-step-num {
+  border-color: var(--cyan);
+  background: var(--cyan);
+  color: var(--navy);
+}
+.consult-step.is-done { color: var(--cyan); }
+.consult-step-track {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.consult-step-track::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--cyan);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.consult-step-track.is-filled::after { transform: scaleX(1); }
+
+/* ── Body / step panels ── */
+.consult-body {
+  padding: 2rem 2.5rem 2.5rem;
+  position: relative;
+}
+.consult-step-panel {
+  display: none;
+}
+.consult-step-panel.is-active {
+  display: block;
+  animation: consultFadeIn 0.35s ease;
+}
+@keyframes consultFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .consult-step-panel.is-active { animation: none; }
+}
+
+.consult-field-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--white);
+  display: block;
+  margin-bottom: 0.35rem;
+}
+.consult-field-hint {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+.consult-required { color: var(--gold); }
+
+/* priority checkboxes */
+.consult-priority-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  margin-bottom: 1.75rem;
+}
+@media (max-width: 560px) {
+  .consult-priority-grid { grid-template-columns: 1fr; }
+}
+.consult-priority {
+  position: relative;
+}
+.consult-priority input {
+  position: absolute;
+  opacity: 0;
+  width: 1px; height: 1px;
+}
+.consult-priority label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+  cursor: pointer;
+  transition: var(--trans);
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+.consult-priority label:hover {
+  border-color: rgba(0,200,232,0.3);
+  color: var(--white);
+}
+.consult-priority-box {
+  width: 16px; height: 16px;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+  margin-top: 2px;
+  position: relative;
+  transition: var(--trans);
+}
+.consult-priority-box::after {
+  content: '';
+  position: absolute;
+  left: 4px; top: 1px;
+  width: 5px; height: 8px;
+  border: solid var(--navy);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) scale(0);
+  transition: transform 0.15s ease;
+}
+.consult-priority input:checked + label {
+  border-color: var(--cyan);
+  background: rgba(0,200,232,0.06);
+  color: var(--white);
+}
+.consult-priority input:checked + label .consult-priority-box {
+  background: var(--cyan);
+  border-color: var(--cyan);
+}
+.consult-priority input:checked + label .consult-priority-box::after {
+  transform: rotate(45deg) scale(1);
+}
+.consult-priority input:focus-visible + label {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+.consult-error {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #f87171;
+  margin: -1.25rem 0 1.5rem;
+  min-height: 1em;
+}
+
+/* text inputs — reuses the same visual language as the existing contact form */
+.consult-input-group { margin-bottom: 1.25rem; }
+.consult-input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 560px) {
+  .consult-input-row { grid-template-columns: 1fr; }
+}
+.consult-input,
+.consult-select {
+  width: 100%;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  color: var(--white);
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 0.75rem 0.9rem;
+  transition: var(--trans);
+}
+.consult-input::placeholder { color: var(--muted); opacity: 0.7; }
+.consult-input:focus,
+.consult-select:focus {
+  outline: none;
+  border-color: var(--cyan);
+  background: rgba(0,200,232,0.04);
+}
+.consult-input.has-error,
+.consult-select.has-error { border-color: #f87171; }
+
+/* ── Footer / actions ── */
+.consult-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+.consult-btn-back {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0;
+  transition: var(--trans);
+}
+.consult-btn-back:hover { color: var(--cyan); }
+.consult-btn-back:disabled { opacity: 0; pointer-events: none; }
+
+.consult-btn-next,
+.consult-btn-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--navy);
+  background: var(--cyan);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  transition: var(--trans);
+  margin-left: auto;
+}
+.consult-btn-next:hover,
+.consult-btn-submit:hover { background: var(--gold); }
+.consult-btn-next:disabled,
+.consult-btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+.consult-btn-next svg,
+.consult-btn-submit svg { transition: transform var(--trans); }
+.consult-btn-next:hover svg,
+.consult-btn-submit:hover svg { transform: translateX(3px); }
+
+/* ── Success state ── */
+.consult-success {
+  display: none;
+  text-align: center;
+  padding: 1rem 0 0.5rem;
+}
+.consult-success.is-active {
+  display: block;
+  animation: consultFadeIn 0.4s ease;
+}
+.consult-success-icon {
+  width: 44px; height: 44px;
+  margin: 0 auto 1.25rem;
+  border: 1px solid var(--cyan);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--cyan);
+  border-radius: 50%;
+}
+.consult-success-title {
+  font-size: 1.1rem;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+.consult-success-body {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+/* ── trust strip ── */
+.consult-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  padding: 1.25rem 2.5rem;
+  border-top: 1px solid var(--border);
+  background: rgba(255,255,255,0.015);
+}
+.consult-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.consult-trust-item svg { color: var(--cyan); flex-shrink: 0; }
+
+@media (max-width: 600px) {
+  .consult-header, .consult-body { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .consult-trust { padding: 1.25rem 1.5rem; }
+  .consult-title { font-size: 1.15rem; }
+}
+</file>
+
+<file path="js/consultation-form.js">
+/* ═══════════════════════════════════════════
+   CONSULTATION REQUEST — Two-step wizard logic
+   Paste before </body>, after your existing
+   scripts, or merge into your main script block.
+
+   Submits to Formspree. Swap FORM_ENDPOINT below
+   for a dedicated endpoint if you'd like consult
+   requests separated from the general contact form.
+═══════════════════════════════════════════ */
+(function () {
+  'use strict';
+
+  var FORM_ENDPOINT = 'https://formspree.io/f/mkoynllz';
+
+  var form = document.getElementById('consultForm');
+  if (!form) return; // section not present on this page
+
+  var step1 = document.getElementById('consultStep1');
+  var step2 = document.getElementById('consultStep2');
+  var title = document.getElementById('consultTitle');
+  var track = document.getElementById('consultTrack');
+  var ind1 = document.getElementById('consultStepInd1');
+  var ind2 = document.getElementById('consultStepInd2');
+
+  var nextBtn = document.getElementById('consultNextBtn');
+  var backBtn = document.getElementById('consultBackBtn');
+  var submitBtn = document.getElementById('consultSubmitBtn');
+
+  var priorityError = document.getElementById('consultPriorityError');
+  var cityError = document.getElementById('consultCityError');
+  var step2Error = document.getElementById('consultStep2Error');
+  var cityInput = document.getElementById('consultCity');
+
+  var successEl = document.getElementById('consultSuccess');
+
+  function trackEvent(name, params) {
+    if (typeof gtag !== 'undefined') {
+      gtag('event', name, params || {});
+    }
+  }
+
+  function goToStep(n) {
+    if (n === 1) {
+      step2.classList.remove('is-active');
+      step1.classList.add('is-active');
+      title.textContent = 'Step 1 — Your Priorities';
+      ind1.classList.add('is-active'); ind1.classList.remove('is-done');
+      ind2.classList.remove('is-active'); ind2.classList.remove('is-done');
+      track.classList.remove('is-filled');
+      step1.querySelector('input, button')?.focus();
+    } else {
+      step1.classList.remove('is-active');
+      step2.classList.add('is-active');
+      title.textContent = 'Step 2 — Your Details';
+      ind1.classList.remove('is-active'); ind1.classList.add('is-done');
+      ind2.classList.add('is-active');
+      track.classList.add('is-filled');
+      document.getElementById('consultFirst')?.focus();
+      trackEvent('consult_step_2', {});
+    }
+  }
+
+  function getCheckedPriorities() {
+    return Array.prototype.slice
+      .call(form.querySelectorAll('input[name="priorities"]:checked'))
+      .map(function (el) { return el.value; });
+  }
+
+  function validateStep1() {
+    var valid = true;
+    var priorities = getCheckedPriorities();
+
+    if (priorities.length === 0) {
+      priorityError.textContent = 'Select at least one priority.';
+      valid = false;
+    } else {
+      priorityError.textContent = '';
+    }
+
+    if (!cityInput.value.trim()) {
+      cityError.textContent = 'This field is required.';
+      cityInput.classList.add('has-error');
+      valid = false;
+    } else {
+      cityError.textContent = '';
+      cityInput.classList.remove('has-error');
+    }
+
+    return valid;
+  }
+
+  function validateStep2() {
+    var required = step2.querySelectorAll('[required]');
+    var valid = true;
+    required.forEach(function (field) {
+      if (!field.value.trim()) {
+        field.classList.add('has-error');
+        valid = false;
+      } else {
+        field.classList.remove('has-error');
+      }
+    });
+    step2Error.textContent = valid ? '' : 'Please fill in all required fields.';
+    return valid;
+  }
+
+  nextBtn.addEventListener('click', function () {
+    if (validateStep1()) {
+      goToStep(2);
+    }
+  });
+
+  backBtn.addEventListener('click', function () {
+    goToStep(1);
+  });
+
+  cityInput.addEventListener('input', function () {
+    if (cityInput.value.trim()) {
+      cityError.textContent = '';
+      cityInput.classList.remove('has-error');
+    }
+  });
+
+  form.querySelectorAll('#consultStep2 input').forEach(function (field) {
+    field.addEventListener('input', function () {
+      field.classList.remove('has-error');
+    });
+  });
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    if (!validateStep2()) return;
+
+    submitBtn.querySelector('span').textContent = 'Sending…';
+    submitBtn.disabled = true;
+    backBtn.disabled = true;
+
+    var formData = new FormData(form);
+    formData.set('priorities', getCheckedPriorities().join(', '));
+    formData.set('_subject', 'New Consultation Request — Nexus Digital Solutions');
+
+    try {
+      var res = await fetch(FORM_ENDPOINT, {
+        method: 'POST',
+        body: formData,
+        headers: { Accept: 'application/json' }
+      });
+
+      if (res.ok) {
+        trackEvent('consult_submit', { priorities: getCheckedPriorities().join(',') });
+        form.style.display = 'none';
+        document.querySelector('.consult-steps').style.display = 'none';
+        successEl.classList.add('is-active');
+      } else {
+        step2Error.textContent = 'Something went wrong — please email us directly or try again.';
+        submitBtn.querySelector('span').textContent = 'Request Consultation';
+        submitBtn.disabled = false;
+        backBtn.disabled = false;
+      }
+    } catch (err) {
+      step2Error.textContent = 'Something went wrong — please email us directly or try again.';
+      submitBtn.querySelector('span').textContent = 'Request Consultation';
+      submitBtn.disabled = false;
+      backBtn.disabled = false;
+    }
+  });
+
+})();
+</file>
+
+<file path="css/style.css">
+/* ============================================================
+   NEXUS DIGITAL SOLUTIONS — Enterprise Stylesheet v2.0
+   Brand: Navy #0A1628 | Deep #1A3C6E | Cyan #00C8E8 | Gold #F0A030
+   Aesthetic: Cyber-Industrial · Terminal Energy · African Precision
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap');
+
+/* ── TOKENS ── */
+:root {
+  --navy:        #060E1A;
+  --navy-mid:    #0A1628;
+  --navy-light:  #0F2240;
+  --deep:        #1A3C6E;
+  --cyan:        #00C8E8;
+  --cyan-bright: #40DCFF;
+  --cyan-dim:    rgba(0,200,232,0.08);
+  --cyan-glow:   rgba(0,200,232,0.25);
+  --gold:        #F0A030;
+  --gold-bright: #FFB84D;
+  --gold-dim:    rgba(240,160,48,0.1);
+  --white:       #F0F4F8;
+  --muted:       #7A8FA8;
+  --muted-light: #9DB0C8;
+  --border:      rgba(0,200,232,0.12);
+  --border-gold: rgba(240,160,48,0.2);
+  --surface:     rgba(10,22,40,0.85);
+  --glass:       rgba(15,34,64,0.6);
+
+  --font-mono:  'Space Mono', 'Courier New', monospace;
+  --font-body:  'DM Sans', 'Segoe UI', sans-serif;
+
+  --max-w:      1200px;
+  --radius-sm:  2px;
+  --radius:     4px;
+  --radius-lg:  8px;
+  --ease:       cubic-bezier(0.4, 0, 0.2, 1);
+  --trans:      0.3s var(--ease);
+  --trans-slow: 0.6s var(--ease);
+}
+
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; font-size: 16px; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--font-body);
+  background: var(--navy);
+  color: var(--white);
+  overflow-x: hidden;
+  line-height: 1.65;
+}
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 3px; }
+::-webkit-scrollbar-track { background: var(--navy); }
+::-webkit-scrollbar-thumb { background: linear-gradient(var(--cyan), var(--gold)); border-radius: 2px; }
+::selection { background: var(--cyan); color: var(--navy); }
+
+/* ── NOISE + SCAN OVERLAY ── */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  pointer-events: none; z-index: 0; opacity: 0.5;
+}
+body::after {
+  content: '';
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,200,232,0.015) 2px, rgba(0,200,232,0.015) 4px);
+  pointer-events: none; z-index: 0;
+  animation: scanlines 8s linear infinite;
+}
+@keyframes scanlines { 0% { background-position: 0 0; } 100% { background-position: 0 100vh; } }
+
+/* ── TYPOGRAPHY ── */
+h1, h2, h3, h4 { font-family: var(--font-mono); letter-spacing: -0.01em; line-height: 1.15; }
+
+/* ── UTILITY ── */
+.container { max-width: var(--max-w); margin: 0 auto; padding: 0 2rem; }
+
+.tag {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem; letter-spacing: 0.2em;
+  color: var(--cyan); border: 1px solid var(--border);
+  padding: 0.3rem 0.85rem;
+  text-transform: uppercase; margin-bottom: 1.25rem;
+  background: var(--cyan-dim);
+  position: relative;
+}
+.tag::before { content: '//'; opacity: 0.5; font-size: 0.55rem; }
+
+.section-title {
+  font-size: clamp(1.7rem, 3vw, 2.6rem);
+  letter-spacing: -0.02em; margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+.section-title .accent { color: var(--cyan); }
+.section-title .accent-gold { color: var(--gold); }
+
+.section-body {
+  color: var(--muted); line-height: 1.9; font-size: 0.96rem;
+  margin-bottom: 1.25rem;
+}
+
+.divider {
+  width: 100%; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), var(--border-gold), var(--border), transparent);
+}
+
+/* ── CURSOR LINE DECORATION ── */
+.cursor-blink::after {
+  content: '_';
+  color: var(--cyan);
+  animation: blink 1.2s step-end infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+/* ── BUTTONS ── */
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem; letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--navy); background: var(--cyan);
+  padding: 0.9rem 2rem;
+  position: relative; overflow: hidden;
+  transition: var(--trans);
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+.btn-primary::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--gold);
+  transform: translateX(-100%);
+  transition: transform var(--trans);
+}
+.btn-primary:hover::before { transform: translateX(0); }
+.btn-primary span { position: relative; z-index: 1; }
+.btn-primary svg { position: relative; z-index: 1; transition: transform var(--trans); }
+.btn-primary:hover svg { transform: translateX(4px); }
+
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem; letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cyan); border: 1px solid var(--cyan);
+  padding: 0.9rem 2rem;
+  transition: var(--trans);
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  position: relative; overflow: hidden;
+}
+.btn-outline::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--cyan-dim);
+  transform: translateX(-100%);
+  transition: transform var(--trans);
+}
+.btn-outline:hover::before { transform: translateX(0); }
+.btn-outline span { position: relative; z-index: 1; }
+.btn-outline:hover { color: var(--white); border-color: var(--cyan-bright); }
+
+
+/* ═══════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════ */
+#navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 1.5rem 0;
+  transition: var(--trans-slow);
+}
+#navbar.scrolled {
+  background: rgba(6,14,26,0.96);
+  border-bottom: 1px solid var(--border);
+  padding: 1rem 0;
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  max-width: var(--max-w); margin: 0 auto; padding: 0 2rem;
+}
+
+.nav-logo {
+  display: flex; align-items: center; gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem; font-weight: 700;
+  letter-spacing: 0.05em; color: var(--white);
+}
+.nav-logo img { height: 34px; }
+.nav-logo-text { display: flex; flex-direction: column; line-height: 1; }
+.nav-logo-main { color: var(--white); font-size: 0.8rem; letter-spacing: 0.08em; }
+.nav-logo-sub { color: var(--cyan); font-size: 0.55rem; letter-spacing: 0.2em; opacity: 0.8; margin-top: 2px; }
+
+.nav-links { display: flex; gap: 0.25rem; list-style: none; align-items: center; }
+.nav-links a {
+  font-family: var(--font-mono);
+  font-size: 0.68rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted);
+  padding: 0.5rem 0.875rem;
+  transition: var(--trans); border: 1px solid transparent;
+  position: relative;
+}
+.nav-links a:hover,
+.nav-links a.active {
+  color: var(--cyan);
+  border-color: var(--border);
+  background: var(--cyan-dim);
+}
+
+.nav-right { display: flex; align-items: center; gap: 1rem; }
+
+.nav-status {
+  display: flex; align-items: center; gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.58rem; letter-spacing: 0.1em;
+  color: var(--muted); text-transform: uppercase;
+}
+.nav-status-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 8px rgba(34,197,94,0.6);
+  animation: statusPulse 2s ease-in-out infinite;
+}
+@keyframes statusPulse {
+  0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.6;transform:scale(0.85)}
+}
+
+.nav-cta {
+  font-family: var(--font-mono);
+  font-size: 0.68rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--navy);
+  background: var(--cyan); padding: 0.55rem 1.25rem;
+  transition: var(--trans);
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+}
+.nav-cta:hover { background: var(--gold); }
+
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+.hamburger span { display: block; width: 24px; height: 2px; background: var(--cyan); transition: var(--trans); }
+.hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+.hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+
+.mobile-nav {
+  display: none; position: fixed; inset: 0;
+  background: rgba(6,14,26,0.98); z-index: 999;
+  flex-direction: column; align-items: flex-start; justify-content: center;
+  padding: 2rem;
+  border-right: 1px solid var(--border);
+  backdrop-filter: blur(20px);
+}
+.mobile-nav.open { display: flex; }
+.mobile-nav-header {
+  font-family: var(--font-mono);
+  font-size: 0.58rem; letter-spacing: 0.2em;
+  color: var(--cyan); text-transform: uppercase;
+  margin-bottom: 2.5rem; opacity: 0.7;
+}
+.mobile-nav a {
+  font-family: var(--font-mono);
+  font-size: 1.4rem; font-weight: 700;
+  letter-spacing: -0.01em; color: var(--white);
+  margin-bottom: 1.25rem;
+  transition: var(--trans);
+  display: flex; align-items: center; gap: 1rem;
+}
+.mobile-nav a::before { content: '//'; color: var(--cyan); font-size: 0.9rem; opacity: 0.6; }
+.mobile-nav a:hover { color: var(--cyan); }
+.mobile-close {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  background: var(--cyan-dim); border: 1px solid var(--border);
+  color: var(--muted); font-size: 1rem;
+  width: 38px; height: 38px;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: var(--trans);
+  font-family: var(--font-mono);
+}
+.mobile-close:hover { color: var(--cyan); border-color: var(--cyan); }
+
+
+/* ═══════════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════════ */
+#hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  position: relative; overflow: hidden;
+  padding: 8rem 0 5rem;
+}
+
+/* animated grid */
+.hero-grid-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(0,200,232,0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,200,232,0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
+  animation: gridScroll 30s linear infinite;
+  mask-image: radial-gradient(ellipse 90% 90% at 50% 50%, black 40%, transparent 100%);
+}
+@keyframes gridScroll { from{background-position:0 0} to{background-position:64px 64px} }
+
+/* geometric accent lines */
+.hero-line-h {
+  position: absolute; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  opacity: 0.15;
+}
+.hero-line-h:nth-child(1) { top: 25%; }
+.hero-line-h:nth-child(2) { top: 75%; }
+
+.hero-line-v {
+  position: absolute; top: 0; bottom: 0; width: 1px;
+  background: linear-gradient(180deg, transparent, var(--gold), transparent);
+  opacity: 0.1;
+}
+.hero-line-v:nth-child(1) { left: 30%; }
+
+/* glowing orbs */
+.hero-orb {
+  position: absolute; border-radius: 50%;
+  filter: blur(100px); pointer-events: none;
+}
+.orb-1 { width: 600px; height: 600px; background: rgba(0,200,232,0.07); top: -150px; right: -100px; }
+.orb-2 { width: 400px; height: 400px; background: rgba(240,160,48,0.05); bottom: -50px; left: -80px; }
+.orb-3 { width: 300px; height: 300px; background: rgba(26,60,110,0.4); top: 30%; left: 45%; }
+
+/* code rain canvas */
+#codeCanvas {
+  position: absolute; inset: 0; z-index: 0;
+  opacity: 0.04; pointer-events: none;
+}
+
+.hero-inner {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 4rem; align-items: center;
+  max-width: var(--max-w); margin: 0 auto; padding: 0 2rem;
+  width: 100%;
+}
+
+/* terminal badge */
+.terminal-badge {
+  display: inline-flex; align-items: center; gap: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem; letter-spacing: 0.12em;
+  color: var(--muted-light); text-transform: uppercase;
+  background: rgba(0,200,232,0.05);
+  border: 1px solid var(--border);
+  padding: 0.5rem 1rem; margin-bottom: 1.75rem;
+  animation: fadeUp 0.8s var(--ease) both;
+}
+.terminal-badge .badge-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 10px var(--gold);
+  animation: statusPulse 2s infinite;
+}
+.terminal-badge .badge-text { color: var(--gold); }
+
+/* eyebrow */
+.hero-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.68rem; letter-spacing: 0.18em;
+  color: var(--cyan); text-transform: uppercase;
+  margin-bottom: 1rem; display: flex; align-items: center; gap: 0.75rem;
+  animation: fadeUp 0.8s var(--ease) 0.1s both;
+}
+.hero-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--cyan); }
+
+.hero-title {
+  font-family: var(--font-mono);
+  font-size: clamp(2.4rem, 4.5vw, 3.8rem);
+  font-weight: 700; letter-spacing: -0.03em; line-height: 1.05;
+  margin-bottom: 1.25rem;
+  animation: fadeUp 0.8s var(--ease) 0.2s both;
+}
+.hero-title .word-cyan { color: var(--cyan); }
+.hero-title .word-gold { color: var(--gold); }
+.hero-title .word-outline {
+  -webkit-text-stroke: 1px rgba(255,255,255,0.25);
+  color: transparent;
+}
+
+.hero-rule {
+  display: flex; align-items: center; gap: 0.75rem;
+  margin: 1.5rem 0;
+  animation: fadeUp 0.8s var(--ease) 0.3s both;
+}
+.hero-rule-line {
+  flex: 1; height: 1px;
+  background: linear-gradient(90deg, var(--cyan), var(--gold));
+}
+.hero-rule-icon {
+  width: 28px; height: 28px;
+  border: 1px solid var(--border);
+  background: var(--cyan-dim);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem; color: var(--cyan);
+  font-family: var(--font-mono);
+}
+
+.hero-desc {
+  color: var(--muted); font-size: 0.97rem;
+  line-height: 1.85; max-width: 500px;
+  margin-bottom: 2.5rem;
+  animation: fadeUp 0.8s var(--ease) 0.4s both;
+}
+
+.hero-actions {
+  display: flex; gap: 1rem; flex-wrap: wrap;
+  animation: fadeUp 0.8s var(--ease) 0.5s both;
+}
+
+/* tech stack pills */
+.hero-stack {
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+  margin-top: 2.5rem;
+  animation: fadeUp 0.8s var(--ease) 0.6s both;
+}
+.stack-pill {
+  font-family: var(--font-mono);
+  font-size: 0.6rem; letter-spacing: 0.08em;
+  color: var(--muted); border: 1px solid var(--border);
+  padding: 0.25rem 0.6rem;
+  transition: var(--trans);
+}
+.stack-pill:hover {
+  color: var(--cyan); border-color: var(--cyan);
+  background: var(--cyan-dim);
+}
+
+/* hero visual */
+.hero-visual {
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  animation: fadeUp 0.8s var(--ease) 0.3s both;
+}
+
+.hero-visual-inner {
+  position: relative; width: 360px; height: 360px;
+}
+
+/* animated ring */
+.hero-ring {
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+}
+.hero-ring:nth-child(1) { animation: ringRotate 20s linear infinite; }
+.hero-ring:nth-child(2) {
+  inset: 30px;
+  border-color: var(--border-gold);
+  animation: ringRotate 14s linear infinite reverse;
+}
+.hero-ring:nth-child(3) {
+  inset: 60px;
+  border-color: var(--border);
+  animation: ringRotate 10s linear infinite;
+}
+@keyframes ringRotate { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+
+/* dots on rings */
+.hero-ring::before {
+  content: '';
+  position: absolute; top: -3px; left: 50%;
+  transform: translateX(-50%);
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 12px var(--cyan);
+}
+.hero-ring:nth-child(2)::before { background: var(--gold); box-shadow: 0 0 12px var(--gold); }
+.hero-ring:nth-child(3)::before { background: var(--cyan-bright); box-shadow: 0 0 8px var(--cyan-bright); }
+
+/* center logo */
+.hero-logo-center {
+  position: absolute; inset: 90px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  backdrop-filter: blur(10px);
+  animation: float 7s ease-in-out infinite;
+}
+.hero-logo-center img { width: 80px; filter: drop-shadow(0 0 20px var(--cyan-glow)); }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-14px)} }
+
+/* corner brackets */
+.hero-bracket {
+  position: absolute;
+  width: 20px; height: 20px;
+}
+.hero-bracket.tl { top: -2px; left: -2px; border-top: 2px solid var(--cyan); border-left: 2px solid var(--cyan); }
+.hero-bracket.tr { top: -2px; right: -2px; border-top: 2px solid var(--gold); border-right: 2px solid var(--gold); }
+.hero-bracket.bl { bottom: -2px; left: -2px; border-bottom: 2px solid var(--gold); border-left: 2px solid var(--gold); }
+.hero-bracket.br { bottom: -2px; right: -2px; border-bottom: 2px solid var(--cyan); border-right: 2px solid var(--cyan); }
+
+/* metric cards floating */
+.hero-metric {
+  position: absolute;
+  background: rgba(6,14,26,0.9);
+  border: 1px solid var(--border);
+  padding: 0.75rem 1rem;
+  backdrop-filter: blur(10px);
+  animation: float 7s ease-in-out infinite;
+}
+.hero-metric:nth-child(2) { top: 20px; right: -60px; animation-delay: -2s; }
+.hero-metric:nth-child(3) { bottom: 30px; left: -50px; animation-delay: -4s; }
+.hero-metric-val {
+  font-family: var(--font-mono);
+  font-size: 1rem; font-weight: 700;
+  color: var(--cyan); line-height: 1;
+}
+.hero-metric-label {
+  font-family: var(--font-mono);
+  font-size: 0.55rem; letter-spacing: 0.12em;
+  color: var(--muted); text-transform: uppercase;
+  margin-top: 0.2rem;
+}
+
+/* animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* PACRA badge */
+.pacra-strip {
+  display: inline-flex; align-items: center; gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.58rem; letter-spacing: 0.15em;
+  color: var(--muted); text-transform: uppercase;
+  border-top: 1px solid var(--border);
+  padding-top: 1.25rem; margin-top: 1.75rem;
+  animation: fadeUp 0.8s var(--ease) 0.7s both;
+}
+.pacra-strip::before { content: '◈'; color: var(--gold); font-size: 0.7rem; }
+.pacra-strip strong { color: var(--gold-bright); }
+
+
+/* ═══════════════════════════════════════════════
+   MARQUEE TICKER
+═══════════════════════════════════════════════ */
+.ticker-wrap {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: rgba(0,200,232,0.03);
+  overflow: hidden; white-space: nowrap;
+  padding: 0.75rem 0;
+  position: relative; z-index: 1;
+}
+.ticker-inner {
+  display: inline-flex; gap: 0;
+  animation: tickerScroll 40s linear infinite;
+}
+.ticker-inner:hover { animation-play-state: paused; }
+.ticker-item {
+  font-family: var(--font-mono);
+  font-size: 0.65rem; letter-spacing: 0.1em;
+  color: var(--muted); text-transform: uppercase;
+  padding: 0 2.5rem;
+  display: inline-flex; align-items: center; gap: 0.75rem;
+}
+.ticker-item::before { content: '◆'; color: var(--cyan); font-size: 0.4rem; }
+.ticker-item.gold::before { color: var(--gold); }
+@keyframes tickerScroll { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+
+/* ═══════════════════════════════════════════════
+   ABOUT
+═══════════════════════════════════════════════ */
+#about { padding: 7rem 0; position: relative; }
+
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 6rem; align-items: center;
+}
+
+/* visual panel */
+.about-visual { position: relative; }
+.about-visual-box {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  padding: 2.5rem;
+  position: relative; overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+.about-visual-box::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--cyan-dim), transparent 60%);
+  pointer-events: none;
+}
+.about-logo-display {
+  display: flex; align-items: center; justify-content: center;
+  height: 220px;
+  position: relative;
+}
+.about-logo-display img {
+  width: 140px; filter: drop-shadow(0 0 30px var(--cyan-glow));
+  animation: float 7s ease-in-out infinite;
+}
+.about-corner { position: absolute; width: 16px; height: 16px; }
+.about-corner.tl { top: 0; left: 0; border-top: 2px solid var(--cyan); border-left: 2px solid var(--cyan); }
+.about-corner.tr { top: 0; right: 0; border-top: 2px solid var(--gold); border-right: 2px solid var(--gold); }
+.about-corner.bl { bottom: 0; left: 0; border-bottom: 2px solid var(--gold); border-left: 2px solid var(--gold); }
+.about-corner.br { bottom: 0; right: 0; border-bottom: 2px solid var(--cyan); border-right: 2px solid var(--cyan); }
+
+.about-stats {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: var(--border);
+  margin-top: 1px;
+}
+.about-stat {
+  background: var(--navy-mid);
+  padding: 1.25rem 1.5rem;
+  transition: var(--trans);
+}
+.about-stat:hover { background: var(--glass); }
+.about-stat-val {
+  font-family: var(--font-mono);
+  font-size: 1.5rem; font-weight: 700;
+  color: var(--cyan); line-height: 1; margin-bottom: 0.25rem;
+}
+.about-stat-val.gold { color: var(--gold); }
+.about-stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.58rem; letter-spacing: 0.12em;
+  color: var(--muted); text-transform: uppercase;
+}
+
+.values-list { list-style: none; margin-top: 1.75rem; display: flex; flex-direction: column; gap: 0.65rem; }
+.values-list li {
+  display: flex; align-items: flex-start; gap: 0.85rem;
+  color: var(--muted); font-size: 0.92rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid transparent;
+  transition: var(--trans);
+}
+.values-list li:hover { border-color: var(--border); background: var(--cyan-dim); color: var(--white); }
+.values-list li .val-icon { color: var(--cyan); flex-shrink: 0; font-family: var(--font-mono); font-size: 0.75rem; margin-top: 2px; }
+.values-list li strong { color: var(--white); font-weight: 500; }
+
+
+/* ═══════════════════════════════════════════════
+   SERVICES
+═══════════════════════════════════════════════ */
+#services {
+  padding: 7rem 0;
+  background: linear-gradient(180deg, transparent 0%, rgba(26,60,110,0.08) 50%, transparent 100%);
+  position: relative;
+}
+#services::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+.section-header { text-align: center; margin-bottom: 4.5rem; }
+.section-header p { color: var(--muted); max-width: 520px; margin: 0 auto; font-size: 0.95rem; line-height: 1.8; }
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.service-card {
+  background: var(--navy);
+  padding: 2.25rem 1.75rem;
+  position: relative; overflow: hidden;
+  transition: var(--trans);
+  cursor: default;
+}
+.service-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--gold));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform var(--trans);
+}
+.service-card::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--cyan-dim), transparent 60%);
+  opacity: 0; transition: opacity var(--trans);
+}
+.service-card:hover { background: rgba(15,34,64,0.8); }
+.service-card:hover::before { transform: scaleX(1); }
+.service-card:hover::after { opacity: 1; }
+
+.service-icon-wrap {
+  width: 46px; height: 46px;
+  background: var(--cyan-dim);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; margin-bottom: 1.5rem;
+  position: relative; z-index: 1;
+  transition: var(--trans);
+}
+.service-card:hover .service-icon-wrap {
+  border-color: var(--cyan);
+  box-shadow: 0 0 20px var(--cyan-glow);
+}
+
+.service-num {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem; letter-spacing: 0.15em;
+  color: rgba(0,200,232,0.2); z-index: 1;
+}
+
+.service-card h3 {
+  font-family: var(--font-mono);
+  font-size: 0.82rem; letter-spacing: 0.05em; font-weight: 700;
+  margin-bottom: 0.75rem; color: var(--white);
+  position: relative; z-index: 1;
+  transition: var(--trans);
+}
+.service-card:hover h3 { color: var(--cyan); }
+
+.service-card p {
+  color: var(--muted); font-size: 0.85rem; line-height: 1.75;
+  position: relative; z-index: 1;
+}
+
+/* service card featured */
+.service-card.featured {
+  background: rgba(0,200,232,0.04);
+  border-left: 1px solid var(--cyan);
+}
+
+
+/* ═══════════════════════════════════════════════
+   WHY NEXUS
+═══════════════════════════════════════════════ */
+#why { padding: 7rem 0; }
+
+.why-inner {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 6rem; align-items: center;
+}
+
+.why-content .section-body { max-width: 480px; }
+
+.why-feature-list {
+  list-style: none; margin: 2rem 0;
+  display: flex; flex-direction: column; gap: 0;
+  border: 1px solid var(--border);
+}
+.why-feature {
+  display: flex; align-items: flex-start; gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  transition: var(--trans);
+  position: relative; overflow: hidden;
+}
+.why-feature:last-child { border-bottom: none; }
+.why-feature::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0; width: 2px;
+  background: var(--cyan);
+  transform: scaleY(0);
+  transition: transform var(--trans);
+}
+.why-feature:hover { background: var(--cyan-dim); }
+.why-feature:hover::before { transform: scaleY(1); }
+.why-feature-icon {
+  width: 36px; height: 36px; flex-shrink: 0;
+  background: var(--cyan-dim); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; margin-top: 2px;
+}
+.why-feature h4 {
+  font-family: var(--font-mono);
+  font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 0.04em; color: var(--white);
+  margin-bottom: 0.3rem;
+}
+.why-feature p { color: var(--muted); font-size: 0.84rem; line-height: 1.6; }
+
+/* stats panel */
+.stats-panel {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(10px);
+  position: relative; overflow: hidden;
+}
+.stats-panel::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--cyan-dim), transparent 60%);
+}
+.stats-panel-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 0.75rem;
+  position: relative;
+}
+.stats-panel-title {
+  font-family: var(--font-mono);
+  font-size: 0.62rem; letter-spacing: 0.15em;
+  color: var(--cyan); text-transform: uppercase;
+}
+.stats-dots { display: flex; gap: 5px; margin-left: auto; }
+.stats-dot { width: 8px; height: 8px; border-radius: 50%; }
+.stats-dot:nth-child(1) { background: #ff5f57; }
+.stats-dot:nth-child(2) { background: #febc2e; }
+.stats-dot:nth-child(3) { background: #28c840; }
+
+.stats-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0; background: var(--border);
+  border-top: 1px solid var(--border);
+  position: relative;
+}
+.stat-box {
+  background: var(--navy-mid);
+  padding: 2rem 1.75rem;
+  border-bottom: 2px solid transparent;
+  transition: var(--trans);
+  position: relative;
+}
+.stat-box::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, var(--cyan-dim), transparent);
+  opacity: 0; transition: opacity var(--trans);
+}
+.stat-box:hover { border-color: var(--cyan); }
+.stat-box:hover::after { opacity: 1; }
+.stat-box:nth-child(2):hover { border-color: var(--gold); }
+.stat-box:nth-child(2):hover::after { background: linear-gradient(135deg, var(--gold-dim), transparent); opacity: 1; }
+
+.stat-num {
+  font-family: var(--font-mono);
+  font-size: 2rem; font-weight: 700;
+  color: var(--cyan); line-height: 1;
+  margin-bottom: 0.4rem;
+  display: block; position: relative;
+}
+.stat-num.gold { color: var(--gold); }
+.stat-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem; letter-spacing: 0.1em;
+  color: var(--muted); text-transform: uppercase;
+  position: relative;
+}
+
+
+/* ═══════════════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════════════ */
+#contact {
+  padding: 7rem 0;
+  border-top: 1px solid var(--border);
+  position: relative;
+}
+#contact::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(0,200,232,0.04), transparent);
+  pointer-events: none;
+}
+
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+
+/* contact info */
+.contact-detail {
+  display: flex; align-items: center; gap: 1rem;
+  margin-bottom: 0.75rem; padding: 1rem;
+  border: 1px solid transparent;
+  transition: var(--trans);
+}
+.contact-clickable {
+  border-color: var(--border);
+  cursor: pointer; text-decoration: none;
+}
+.contact-clickable:hover {
+  background: var(--cyan-dim);
+  border-color: var(--cyan);
+  transform: translateX(4px);
+}
+.contact-icon {
+  width: 44px; height: 44px; flex-shrink: 0;
+  background: var(--cyan-dim); border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  transition: var(--trans);
+}
+.contact-clickable:hover .contact-icon {
+  border-color: var(--cyan);
+  box-shadow: 0 0 15px var(--cyan-glow);
+}
+.contact-info h4 {
+  font-family: var(--font-mono);
+  font-size: 0.58rem; letter-spacing: 0.15em;
+  color: var(--muted); text-transform: uppercase; margin-bottom: 0.25rem;
+}
+.contact-info span, .contact-info a {
+  color: var(--white); font-size: 0.92rem; text-decoration: none;
+}
+.contact-arrow {
+  margin-left: auto; color: var(--muted); opacity: 0;
+  flex-shrink: 0; transition: var(--trans);
+}
+.contact-clickable:hover .contact-arrow { opacity: 1; color: var(--cyan); }
+
+/* social links */
+.social-links { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.75rem; }
+.social-link {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.55rem 1rem;
+  background: transparent; border: 1px solid var(--border);
+  text-decoration: none; color: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.65rem; letter-spacing: 0.08em;
+  text-transform: uppercase; transition: var(--trans);
+}
+.social-link:hover {
+  background: var(--cyan-dim);
+  border-color: var(--cyan); color: var(--cyan);
+  transform: translateY(-2px);
+}
+
+/* contact form */
+.contact-form-wrap {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  padding: 2.5rem;
+  backdrop-filter: blur(10px);
+  position: relative; overflow: hidden;
+}
+.contact-form-wrap::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--gold));
+}
+.form-header {
+  font-family: var(--font-mono);
+  font-size: 0.6rem; letter-spacing: 0.15em;
+  color: var(--cyan); text-transform: uppercase;
+  margin-bottom: 1.75rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.form-header::before { content: '$'; color: var(--gold); }
+
+.contact-form { display: flex; flex-direction: column; gap: 1rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.form-group label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted);
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  color: var(--white); padding: 0.8rem 1rem;
+  font-family: var(--font-body); font-size: 0.92rem;
+  outline: none; resize: none; appearance: none;
+  transition: var(--trans);
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder { color: rgba(122,143,168,0.45); }
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  border-color: var(--cyan);
+  background: var(--cyan-dim);
+  box-shadow: 0 0 0 3px rgba(0,200,232,0.08);
+}
+.form-group textarea { min-height: 110px; }
+.form-group select option { background: var(--navy-mid); }
+
+.btn-submit {
+  font-family: var(--font-mono);
+  font-size: 0.72rem; letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--navy); background: var(--cyan);
+  border: none; padding: 1rem 2rem;
+  cursor: pointer; align-self: flex-start;
+  transition: var(--trans);
+  display: flex; align-items: center; gap: 0.6rem;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  position: relative; overflow: hidden;
+}
+.btn-submit::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--gold);
+  transform: translateX(-100%);
+  transition: transform var(--trans);
+}
+.btn-submit:hover::before { transform: translateX(0); }
+.btn-submit span, .btn-submit svg { position: relative; z-index: 1; }
+.btn-submit:hover { transform: translateY(-2px); }
+.btn-submit svg { transition: transform var(--trans); }
+.btn-submit:hover svg { transform: translateX(4px); }
+
+.form-note {
+  font-family: var(--font-mono);
+  font-size: 0.72rem; color: var(--muted);
+  margin-top: 0.5rem; display: none;
+  align-items: center; gap: 0.5rem;
+}
+.form-note.show { display: flex; color: var(--cyan); }
+
+
+/* ═══════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════ */
+footer {
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--border);
+  background: rgba(0,0,0,0.3);
+  position: relative;
+}
+.footer-inner {
+  display: flex; align-items: center;
+  justify-content: space-between; flex-wrap: wrap; gap: 1rem;
+}
+.footer-logo img { height: 26px; opacity: 0.65; }
+.footer-copy {
+  font-family: var(--font-mono);
+  font-size: 0.6rem; letter-spacing: 0.1em;
+  color: var(--muted); text-align: center;
+}
+.footer-pacra {
+  font-family: var(--font-mono);
+  font-size: 0.6rem; letter-spacing: 0.08em;
+  color: rgba(240,160,48,0.5);
+  display: flex; align-items: center; gap: 0.4rem;
+}
+.footer-pacra::before { content: '◈'; color: var(--gold); font-size: 0.6rem; opacity: 0.7; }
+
+
+/* ═══════════════════════════════════════════════
+   WHATSAPP FLOAT
+═══════════════════════════════════════════════ */
+.wa-float {
+  position: fixed; bottom: 1.75rem; right: 1.75rem;
+  width: 52px; height: 52px;
+  background: #25D366; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+  z-index: 999; transition: var(--trans);
+  animation: waPop 0.5s var(--ease) 1.5s both;
+}
+.wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.6); }
+@keyframes waPop { from{opacity:0;transform:scale(0)} to{opacity:1;transform:scale(1)} }
+
+
+/* ═══════════════════════════════════════════════
+   SCROLL ANIMATIONS
+═══════════════════════════════════════════════ */
+.fade-up {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.fade-up.visible { opacity: 1; transform: translateY(0); }
+.fade-up:nth-child(2) { transition-delay: 0.1s; }
+.fade-up:nth-child(3) { transition-delay: 0.2s; }
+.fade-up:nth-child(4) { transition-delay: 0.3s; }
+.stagger .fade-up:nth-child(1) { transition-delay: 0s; }
+.stagger .fade-up:nth-child(2) { transition-delay: 0.08s; }
+.stagger .fade-up:nth-child(3) { transition-delay: 0.16s; }
+.stagger .fade-up:nth-child(4) { transition-delay: 0.24s; }
+.stagger .fade-up:nth-child(5) { transition-delay: 0.32s; }
+.stagger .fade-up:nth-child(6) { transition-delay: 0.4s; }
+.stagger .fade-up:nth-child(7) { transition-delay: 0.48s; }
+.stagger .fade-up:nth-child(8) { transition-delay: 0.56s; }
+
+
+/* ═══════════════════════════════════════════════
+   ABOUT PAGE EXTRAS
+═══════════════════════════════════════════════ */
+.page-hero {
+  min-height: 42vh; display: flex; align-items: flex-end;
+  padding: 9rem 0 4.5rem; position: relative; overflow: hidden;
+}
+.page-hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(0,200,232,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,200,232,0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 100% 100% at 50% 100%, black, transparent);
+}
+.page-hero-orb-1 { position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none; width:400px;height:400px;background:rgba(0,200,232,0.07);top:-100px;right:-50px; }
+.page-hero-orb-2 { position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none; width:300px;height:300px;background:rgba(240,160,48,0.05);bottom:0;left:-50px; }
+.page-hero-inner { position: relative; z-index: 1; }
+.breadcrumb {
+  font-family: var(--font-mono);
+  font-size: 0.62rem; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 0.5rem;
+}
+.breadcrumb a { color: var(--cyan); text-decoration: none; }
+.breadcrumb a:hover { text-decoration: underline; }
+.page-title {
+  font-size: clamp(2.2rem,5vw,3.5rem);
+  font-family: var(--font-mono);
+  letter-spacing: -0.02em; line-height: 1.1;
+}
+.page-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.72rem; letter-spacing: 0.18em;
+  color: var(--gold); text-transform: uppercase; margin-top: 0.85rem;
+}
+
+/* story section */
+.story-section { padding: 6rem 0; }
+.story-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 6rem; align-items: start; }
+.story-lead {
+  font-size: 1.1rem; color: var(--white); line-height: 1.85;
+  margin-bottom: 1.5rem;
+  border-left: 3px solid var(--cyan); padding-left: 1.5rem;
+}
+
+/* mv cards */
+.mv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 2rem; }
+.mv-card {
+  border: 1px solid var(--border); padding: 1.5rem;
+  position: relative; overflow: hidden;
+  transition: var(--trans);
+}
+.mv-card:hover { background: var(--glass); }
+.mv-card.vision { border-color: rgba(0,200,232,0.25); }
+.mv-card.mission { border-color: rgba(240,160,48,0.25); }
+.mv-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+}
+.mv-card.vision::before { background: var(--cyan); }
+.mv-card.mission::before { background: var(--gold); }
+.mv-label {
+  font-family: var(--font-mono);
+  font-size: 0.6rem; letter-spacing: 0.15em;
+  text-transform: uppercase; margin-bottom: 0.6rem;
+}
+.mv-card.vision .mv-label { color: var(--cyan); }
+.mv-card.mission .mv-label { color: var(--gold); }
+.mv-card p { color: var(--muted); font-size: 0.88rem; line-height: 1.75; font-style: italic; }
+
+/* values section */
+.values-section { padding: 6rem 0; }
+.values-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 0;
+  background: var(--border); border: 1px solid var(--border);
+  margin-top: 3.5rem;
+}
+.value-card {
+  background: var(--navy); padding: 2.25rem 2rem;
+  position: relative; overflow: hidden; transition: var(--trans);
+}
+.value-card:hover { background: rgba(15,34,64,0.8); }
+.value-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--cyan), var(--gold));
+  transform: scaleX(0); transform-origin: left;
+  transition: transform var(--trans);
+}
+.value-card:hover::before { transform: scaleX(1); }
+.value-icon { font-size: 1.5rem; margin-bottom: 1rem; display: block; }
+.value-card h3 {
+  font-family: var(--font-mono);
+  font-size: 0.78rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--cyan); margin-bottom: 0.75rem;
+}
+.value-card p { color: var(--muted); font-size: 0.86rem; line-height: 1.75; }
+
+/* founder section */
+.founder-section { padding: 6rem 0; }
+.founder-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 5rem; align-items: start; }
+.founder-card {
+  background: var(--glass);
+  border: 1px solid var(--border); padding: 2rem;
+  text-align: center; position: relative;
+  backdrop-filter: blur(10px);
+}
+.founder-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--cyan), var(--gold));
+}
+.founder-avatar {
+  width: 88px; height: 88px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--cyan), var(--deep));
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 1.8rem; color: var(--white);
+  margin: 0 auto 1.25rem; border: 2px solid var(--border);
+  font-weight: 700;
+}
+.founder-name {
+  font-family: var(--font-mono); font-size: 0.88rem; letter-spacing: 0.08em;
+  color: var(--white); margin-bottom: 0.25rem; font-weight: 700;
+}
+.founder-role {
+  font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--cyan); margin-bottom: 1.25rem;
+}
+.founder-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; }
+.founder-tag {
+  font-family: var(--font-mono); font-size: 0.58rem; letter-spacing: 0.06em;
+  border: 1px solid var(--border); color: var(--muted); padding: 0.2rem 0.5rem;
+}
+.founder-links { display: flex; flex-direction: column; gap: 0.4rem; margin-top: 1.25rem; }
+.founder-link {
+  display: flex; align-items: center; gap: 0.6rem;
+  font-family: var(--font-mono); font-size: 0.63rem; letter-spacing: 0.06em;
+  color: var(--muted); text-decoration: none;
+  padding: 0.6rem; border: 1px solid transparent; transition: var(--trans);
+}
+.founder-link:hover { border-color: var(--border); color: var(--cyan); background: var(--cyan-dim); }
+
+/* tech stack pills (about page) */
+.stack-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+
+/* cta band */
+.cta-band {
+  padding: 6rem 0; text-align: center;
+  border-top: 1px solid var(--border); position: relative; overflow: hidden;
+}
+.cta-band::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(0,200,232,0.06) 0%, transparent 70%);
+}
+.cta-band h2 { font-size: clamp(1.6rem,3vw,2.4rem); margin-bottom: 1rem; letter-spacing: -0.02em; }
+.cta-band p { color: var(--muted); margin-bottom: 2rem; font-size: 0.95rem; max-width: 480px; margin-left:auto; margin-right:auto; }
+.cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+
+/* ═══════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .hero-inner,
+  .about-grid,
+  .why-inner,
+  .contact-grid,
+  .story-grid,
+  .founder-grid { grid-template-columns: 1fr; gap: 3rem; }
+
+  .hero-visual { order: -1; }
+  .hero-visual-inner { width: 260px; height: 260px; }
+  .hero-metric { display: none; }
+  .about-visual { display: none; }
+  .nav-links, .nav-cta, .nav-status { display: none; }
+  .hamburger { display: flex; }
+  .mv-grid { grid-template-columns: 1fr; }
+  .services-grid { grid-template-columns: 1fr 1fr; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .contact-form-wrap { padding: 1.75rem; }
+}
+
+@media (max-width: 600px) {
+  .services-grid { grid-template-columns: 1fr; }
+  .hero-stack { display: none; }
+  .btn-primary, .btn-outline { padding: 0.8rem 1.5rem; }
+  .container { padding: 0 1.25rem; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .values-grid { grid-template-columns: 1fr; }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .values-grid { grid-template-columns: 1fr 1fr; }
+}
+</file>
+
+<file path="images/nexus_icon_square.svg">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0f1e"/>
+      <stop offset="100%" style="stop-color:#0d1a2e"/>
+    </linearGradient>
+    <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4ff"/>
+      <stop offset="100%" style="stop-color:#0077cc"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00d4ff"/>
+      <stop offset="100%" style="stop-color:#e8a020"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="200" height="200" fill="url(#bgGrad)" rx="36"/>
+
+  <!-- Connection lines -->
+  <line x1="100" y1="100" x2="100" y2="38" stroke="url(#accentGrad)" stroke-width="2" stroke-opacity="0.7"/>
+  <line x1="100" y1="100" x2="47" y2="153" stroke="url(#accentGrad)" stroke-width="2" stroke-opacity="0.7"/>
+  <line x1="100" y1="100" x2="153" y2="153" stroke="url(#accentGrad)" stroke-width="2" stroke-opacity="0.7"/>
+  <line x1="100" y1="100" x2="38" y2="100" stroke="url(#accentGrad)" stroke-width="2" stroke-opacity="0.7"/>
+  <line x1="100" y1="100" x2="162" y2="100" stroke="url(#accentGrad)" stroke-width="2" stroke-opacity="0.7"/>
+  <line x1="100" y1="100" x2="153" y2="47" stroke="url(#accentGrad)" stroke-width="2" stroke-opacity="0.7"/>
+
+  <!-- Outer ring connections -->
+  <line x1="100" y1="38" x2="153" y2="47" stroke="#00d4ff" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="153" y1="47" x2="162" y2="100" stroke="#00d4ff" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="162" y1="100" x2="153" y2="153" stroke="#00d4ff" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="47" y1="153" x2="38" y2="100" stroke="#00d4ff" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="38" y1="100" x2="100" y2="38" stroke="#00d4ff" stroke-width="1" stroke-opacity="0.3"/>
+
+  <!-- Satellite nodes -->
+  <circle cx="100" cy="36" r="7" fill="url(#nodeGrad)" filter="url(#glow)"/>
+  <circle cx="155" cy="46" r="6" fill="#e8a020" filter="url(#glow)"/>
+  <circle cx="164" cy="100" r="7" fill="url(#nodeGrad)" filter="url(#glow)"/>
+  <circle cx="155" cy="154" r="6" fill="#e8a020" filter="url(#glow)"/>
+  <circle cx="45" cy="154" r="6" fill="url(#nodeGrad)" filter="url(#glow)"/>
+  <circle cx="36" cy="100" r="7" fill="#e8a020" filter="url(#glow)"/>
+
+  <!-- Center hub -->
+  <circle cx="100" cy="100" r="16" fill="url(#nodeGrad)" filter="url(#softGlow)"/>
+  <circle cx="100" cy="100" r="9" fill="#ffffff"/>
+
+  <!-- N lettermark in center -->
+  <text x="100" y="105" font-family="'Courier New', monospace" font-size="11" font-weight="700" fill="#0a0f1e" text-anchor="middle">N</text>
+</svg>
+</file>
+
+<file path="images/nexus_logo_light.svg">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" width="600" height="200">
+  <defs>
+    <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0077cc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#005599;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0077cc;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e8a020;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- White background -->
+  <rect width="600" height="200" fill="#ffffff" rx="12"/>
+  <rect width="600" height="200" fill="#f8fafc" rx="12"/>
+
+  <!-- Connection lines -->
+  <line x1="100" y1="100" x2="100" y2="52" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.5"/>
+  <line x1="100" y1="100" x2="62" y2="138" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.5"/>
+  <line x1="100" y1="100" x2="138" y2="138" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.5"/>
+  <line x1="100" y1="100" x2="55" y2="100" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.5"/>
+  <line x1="100" y1="100" x2="145" y2="100" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.5"/>
+  <line x1="100" y1="100" x2="138" y2="62" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.5"/>
+  <line x1="100" y1="52" x2="138" y2="62" stroke="#0077cc" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="138" y1="62" x2="145" y2="100" stroke="#0077cc" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="145" y1="100" x2="138" y2="138" stroke="#0077cc" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="62" y1="138" x2="55" y2="100" stroke="#0077cc" stroke-width="1" stroke-opacity="0.25"/>
+  <line x1="55" y1="100" x2="100" y2="52" stroke="#0077cc" stroke-width="1" stroke-opacity="0.25"/>
+
+  <!-- Satellite nodes -->
+  <circle cx="100" cy="48" r="5" fill="url(#nodeGrad)"/>
+  <circle cx="140" cy="60" r="4" fill="#e8a020"/>
+  <circle cx="148" cy="100" r="5" fill="url(#nodeGrad)"/>
+  <circle cx="140" cy="140" r="4" fill="#e8a020"/>
+  <circle cx="60" cy="140" r="4" fill="url(#nodeGrad)"/>
+  <circle cx="52" cy="100" r="5" fill="#e8a020"/>
+
+  <!-- Center node -->
+  <circle cx="100" cy="100" r="10" fill="url(#nodeGrad)"/>
+  <circle cx="100" cy="100" r="6" fill="#ffffff"/>
+
+  <!-- Wordmark dark -->
+  <text x="185" y="88"
+    font-family="'Courier New', 'Lucida Console', monospace"
+    font-size="38"
+    font-weight="700"
+    letter-spacing="6"
+    fill="#0a1628">NEXUS</text>
+
+  <rect x="185" y="96" width="340" height="2" fill="url(#accentGrad)" rx="1"/>
+
+  <text x="186" y="120"
+    font-family="'Courier New', 'Lucida Console', monospace"
+    font-size="13"
+    font-weight="400"
+    letter-spacing="8"
+    fill="#0077cc">DIGITAL SOLUTIONS</text>
+
+  <text x="186" y="152"
+    font-family="'Courier New', 'Lucida Console', monospace"
+    font-size="10.5"
+    font-weight="400"
+    letter-spacing="3"
+    fill="#e8a020">CONNECTING THE DOTS. BUILDING THE FUTURE.</text>
+
+  <!-- Corner brackets -->
+  <path d="M 16 16 L 16 30 M 16 16 L 30 16" stroke="#0077cc" stroke-width="1.5" stroke-opacity="0.3" fill="none"/>
+  <path d="M 584 16 L 584 30 M 584 16 L 570 16" stroke="#0077cc" stroke-width="1.5" stroke-opacity="0.3" fill="none"/>
+  <path d="M 16 184 L 16 170 M 16 184 L 30 184" stroke="#0077cc" stroke-width="1.5" stroke-opacity="0.3" fill="none"/>
+  <path d="M 584 184 L 584 170 M 584 184 L 570 184" stroke="#0077cc" stroke-width="1.5" stroke-opacity="0.3" fill="none"/>
+</svg>
+</file>
+
+<file path="images/nexus_logo_stacked.svg">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 320" width="300" height="320">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0f1e"/>
+      <stop offset="100%" style="stop-color:#0d1a2e"/>
+    </linearGradient>
+    <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4ff"/>
+      <stop offset="100%" style="stop-color:#0077cc"/>
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00d4ff"/>
+      <stop offset="100%" style="stop-color:#e8a020"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+      <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <rect width="300" height="320" fill="url(#bgGrad)" rx="16"/>
+
+  <!-- Icon centered top -->
+  <!-- Connection lines -->
+  <line x1="150" y1="110" x2="150" y2="58" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.7"/>
+  <line x1="150" y1="110" x2="107" y2="153" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.7"/>
+  <line x1="150" y1="110" x2="193" y2="153" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.7"/>
+  <line x1="150" y1="110" x2="100" y2="110" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.7"/>
+  <line x1="150" y1="110" x2="200" y2="110" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.7"/>
+  <line x1="150" y1="110" x2="193" y2="67" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.7"/>
+  <line x1="150" y1="58" x2="193" y2="67" stroke="#00d4ff" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="193" y1="67" x2="200" y2="110" stroke="#00d4ff" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="200" y1="110" x2="193" y2="153" stroke="#00d4ff" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="107" y1="153" x2="100" y2="110" stroke="#00d4ff" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="100" y1="110" x2="150" y2="58" stroke="#00d4ff" stroke-width="1" stroke-opacity="0.3"/>
+
+  <!-- Satellite nodes -->
+  <circle cx="150" cy="54" r="6" fill="url(#nodeGrad)" filter="url(#glow)"/>
+  <circle cx="195" cy="65" r="5" fill="#e8a020" filter="url(#glow)"/>
+  <circle cx="204" cy="110" r="6" fill="url(#nodeGrad)" filter="url(#glow)"/>
+  <circle cx="195" cy="155" r="5" fill="#e8a020" filter="url(#glow)"/>
+  <circle cx="105" cy="155" r="5" fill="url(#nodeGrad)" filter="url(#glow)"/>
+  <circle cx="96" cy="110" r="6" fill="#e8a020" filter="url(#glow)"/>
+
+  <!-- Center hub -->
+  <circle cx="150" cy="110" r="13" fill="url(#nodeGrad)" filter="url(#softGlow)"/>
+  <circle cx="150" cy="110" r="7" fill="#ffffff"/>
+
+  <!-- Wordmark stacked -->
+  <text x="150" y="198"
+    font-family="'Courier New', monospace"
+    font-size="32" font-weight="700" letter-spacing="5"
+    fill="#ffffff" text-anchor="middle" filter="url(#glow)">NEXUS</text>
+
+  <rect x="40" y="206" width="220" height="2" fill="url(#accentGrad)" rx="1"/>
+
+  <text x="150" y="228"
+    font-family="'Courier New', monospace"
+    font-size="10" font-weight="400" letter-spacing="5"
+    fill="#00d4ff" text-anchor="middle">DIGITAL SOLUTIONS</text>
+
+  <text x="150" y="264"
+    font-family="'Courier New', monospace"
+    font-size="7.5" font-weight="300" letter-spacing="2"
+    fill="#e8a020" text-anchor="middle" opacity="0.85">CONNECTING THE DOTS.</text>
+
+  <text x="150" y="279"
+    font-family="'Courier New', monospace"
+    font-size="7.5" font-weight="300" letter-spacing="2"
+    fill="#e8a020" text-anchor="middle" opacity="0.85">BUILDING THE FUTURE.</text>
+
+  <!-- Corner brackets -->
+  <path d="M 14 14 L 14 26 M 14 14 L 26 14" stroke="#00d4ff" stroke-width="1.5" stroke-opacity="0.4" fill="none"/>
+  <path d="M 286 14 L 286 26 M 286 14 L 274 14" stroke="#00d4ff" stroke-width="1.5" stroke-opacity="0.4" fill="none"/>
+  <path d="M 14 306 L 14 294 M 14 306 L 26 306" stroke="#00d4ff" stroke-width="1.5" stroke-opacity="0.4" fill="none"/>
+  <path d="M 286 306 L 286 294 M 286 306 L 274 306" stroke="#00d4ff" stroke-width="1.5" stroke-opacity="0.4" fill="none"/>
+</svg>
+</file>
+
+<file path="images/nexus_logo.svg">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" width="600" height="200">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0f1e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d1a2e;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="nodeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0077cc;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e8a020;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="200" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- Grid lines subtle -->
+  <line x1="0" y1="100" x2="600" y2="100" stroke="#ffffff" stroke-opacity="0.03" stroke-width="1"/>
+  <line x1="300" y1="0" x2="300" y2="200" stroke="#ffffff" stroke-opacity="0.03" stroke-width="1"/>
+
+  <!-- ── NEXUS ICON: interconnected nodes ── -->
+  <!-- Connection lines first (behind nodes) -->
+  <!-- Center to Top -->
+  <line x1="100" y1="100" x2="100" y2="52" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.6"/>
+  <!-- Center to Bottom-Left -->
+  <line x1="100" y1="100" x2="62" y2="138" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.6"/>
+  <!-- Center to Bottom-Right -->
+  <line x1="100" y1="100" x2="138" y2="138" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.6"/>
+  <!-- Center to Left -->
+  <line x1="100" y1="100" x2="55" y2="100" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.6"/>
+  <!-- Center to Right -->
+  <line x1="100" y1="100" x2="145" y2="100" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.6"/>
+  <!-- Center to Top-Right -->
+  <line x1="100" y1="100" x2="138" y2="62" stroke="url(#accentGrad)" stroke-width="1.5" stroke-opacity="0.6"/>
+  <!-- Outer connections -->
+  <line x1="100" y1="52" x2="138" y2="62" stroke="#00d4ff" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="138" y1="62" x2="145" y2="100" stroke="#00d4ff" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="145" y1="100" x2="138" y2="138" stroke="#00d4ff" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="62" y1="138" x2="55" y2="100" stroke="#00d4ff" stroke-width="1" stroke-opacity="0.3"/>
+  <line x1="55" y1="100" x2="100" y2="52" stroke="#00d4ff" stroke-width="1" stroke-opacity="0.3"/>
+
+  <!-- Satellite nodes -->
+  <!-- Top -->
+  <circle cx="100" cy="48" r="5" fill="url(#nodeGrad)" filter="url(#glow)"/>
+  <!-- Top-Right -->
+  <circle cx="140" cy="60" r="4" fill="#e8a020" filter="url(#glow)" opacity="0.9"/>
+  <!-- Right -->
+  <circle cx="148" cy="100" r="5" fill="url(#nodeGrad)" filter="url(#glow)"/>
+  <!-- Bottom-Right -->
+  <circle cx="140" cy="140" r="4" fill="#e8a020" filter="url(#glow)" opacity="0.9"/>
+  <!-- Bottom-Left -->
+  <circle cx="60" cy="140" r="4" fill="url(#nodeGrad)" filter="url(#glow)" opacity="0.8"/>
+  <!-- Left -->
+  <circle cx="52" cy="100" r="5" fill="#e8a020" filter="url(#glow)" opacity="0.9"/>
+
+  <!-- Center node — main hub -->
+  <circle cx="100" cy="100" r="10" fill="url(#nodeGrad)" filter="url(#softGlow)"/>
+  <circle cx="100" cy="100" r="6" fill="#ffffff" opacity="0.95"/>
+
+  <!-- ── WORDMARK ── -->
+  <!-- NEXUS DIGITAL SOLUTIONS -->
+  <text x="185" y="88"
+    font-family="'Courier New', 'Lucida Console', monospace"
+    font-size="38"
+    font-weight="700"
+    letter-spacing="6"
+    fill="#ffffff"
+    filter="url(#glow)">NEXUS</text>
+
+  <!-- Accent line under NEXUS -->
+  <rect x="185" y="96" width="340" height="2" fill="url(#accentGrad)" rx="1"/>
+
+  <text x="186" y="120"
+    font-family="'Courier New', 'Lucida Console', monospace"
+    font-size="13"
+    font-weight="400"
+    letter-spacing="8"
+    fill="#00d4ff"
+    opacity="0.85">DIGITAL SOLUTIONS</text>
+
+  <!-- Motto -->
+  <text x="186" y="152"
+    font-family="'Courier New', 'Lucida Console', monospace"
+    font-size="10.5"
+    font-weight="300"
+    letter-spacing="3"
+    fill="#e8a020"
+    opacity="0.8">CONNECTING THE DOTS. BUILDING THE FUTURE.</text>
+
+  <!-- Corner decorative brackets -->
+  <path d="M 16 16 L 16 30 M 16 16 L 30 16" stroke="#00d4ff" stroke-width="1.5" stroke-opacity="0.4" fill="none"/>
+  <path d="M 584 16 L 584 30 M 584 16 L 570 16" stroke="#00d4ff" stroke-width="1.5" stroke-opacity="0.4" fill="none"/>
+  <path d="M 16 184 L 16 170 M 16 184 L 30 184" stroke="#00d4ff" stroke-width="1.5" stroke-opacity="0.4" fill="none"/>
+  <path d="M 584 184 L 584 170 M 584 184 L 570 184" stroke="#00d4ff" stroke-width="1.5" stroke-opacity="0.4" fill="none"/>
+</svg>
+</file>
+
+<file path=".gitignore">
+.vercel
+</file>
+
+<file path="about.html">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us | Nexus Digital Solutions</title>
+  <meta name="description" content="Learn about Nexus Digital Solutions — a PACRA-registered Zambian technology company founded by Simeon Mwale, building digital products for Africa." />
+  <meta property="og:title" content="About Nexus Digital Solutions" />
+  <meta property="og:description" content="Connecting communities to digital opportunity. PACRA registered. Lusaka, Zambia." />
+  <meta property="og:image" content="images/nexus_icon_512.png" />
+  <meta name="theme-color" content="#060E1A" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="images/nexus_icon_192.png" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C2NPXEDQBR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-C2NPXEDQBR');
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════════ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">
+      <img src="images/nexus_logo.svg" alt="Nexus Digital Solutions" />
+      <div class="nav-logo-text">
+        <span class="nav-logo-main">NEXUS</span>
+        <span class="nav-logo-sub">Digital Solutions</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="index.html#why">Why Nexus</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <div class="nav-status">
+        <div class="nav-status-dot"></div>
+        <span>Online</span>
+      </div>
+      <a class="nav-cta" href="index.html#contact">Get in Touch</a>
+      <div class="hamburger" id="hamburger" aria-label="Open menu" role="button" tabindex="0">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <button class="mobile-close" id="mobileClose" aria-label="Close menu">✕</button>
+  <div class="mobile-nav-header">// NEXUS_NAV_MENU</div>
+  <a href="index.html#services" class="mobile-link">Services</a>
+  <a href="about.html" class="mobile-link">About</a>
+  <a href="index.html#why" class="mobile-link">Why Nexus</a>
+  <a href="index.html#contact" class="mobile-link">Contact</a>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE HERO
+═══════════════════════════════════════════ -->
+<section class="page-hero">
+  <div class="page-hero-grid" aria-hidden="true"></div>
+  <div class="page-hero-orb-1" aria-hidden="true"></div>
+  <div class="page-hero-orb-2" aria-hidden="true"></div>
+  <div class="container page-hero-inner">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span aria-hidden="true">›</span>
+      <span aria-current="page">About</span>
+    </nav>
+    <h1 class="page-title">About <span class="accent">Nexus</span><br>Digital Solutions</h1>
+    <p class="page-subtitle">Connecting Communities to Digital Opportunity</p>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+<!-- ═══════════════════════════════════════════
+     STORY
+═══════════════════════════════════════════ -->
+<section class="story-section">
+  <div class="container">
+    <div class="story-grid">
+
+      <div class="fade-up">
+        <div class="tag">Our Story</div>
+        <h2 class="section-title">Built from<br><span class="accent">Zambia</span>,<br>for Africa.</h2>
+
+        <div class="mv-grid">
+          <div class="mv-card vision">
+            <div class="mv-label">Vision</div>
+            <p>To be Africa's leading bridge between communities and transformative digital technology.</p>
+          </div>
+          <div class="mv-card mission">
+            <div class="mv-label">Mission</div>
+            <p>To design and deliver innovative digital solutions that connect underserved communities to financial, agricultural, and economic opportunities.</p>
+          </div>
+        </div>
+
+        <!-- About stats inline -->
+        <div class="about-stats" style="margin-top:1.5px;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);">
+          <div class="about-stat" style="background:var(--navy-mid);padding:1.25rem 1.5rem;">
+            <div class="about-stat-val">2026</div>
+            <div class="about-stat-label">Est. Lusaka</div>
+          </div>
+          <div class="about-stat" style="background:var(--navy-mid);padding:1.25rem 1.5rem;">
+            <div class="about-stat-val gold">PACRA</div>
+            <div class="about-stat-label">Registered</div>
+          </div>
+          <div class="about-stat" style="background:var(--navy-mid);padding:1.25rem 1.5rem;">
+            <div class="about-stat-val">8+</div>
+            <div class="about-stat-label">Service Lines</div>
+          </div>
+          <div class="about-stat" style="background:var(--navy-mid);padding:1.25rem 1.5rem;">
+            <div class="about-stat-val gold">ZMW</div>
+            <div class="about-stat-label">Local Pricing</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fade-up">
+        <p class="story-lead">
+          Nexus Digital Solutions is a Zambian technology company incorporated in 2026 and registered
+          under the Patents and Companies Registration Agency (PACRA).
+        </p>
+        <p class="section-body">
+          The name "Nexus" reflects the company's core philosophy: to serve as the connection point
+          between underserved communities and transformative digital tools. In a landscape where millions
+          of Zambians remain excluded from formal financial systems and lack access to data-driven
+          decision-making tools, Nexus Digital Solutions exists to bridge that gap.
+        </p>
+        <p class="section-body">
+          We don't build technology for technology's sake. We build tools that solve real problems,
+          reduce friction in people's daily economic lives, and create tangible value for the communities
+          we serve. Every product under the Nexus banner is designed with practical deployment in mind —
+          targeting real users across formal and informal sectors of the Zambian economy.
+        </p>
+        <p class="section-body">
+          Primary operations are based in Lusaka, Zambia, with products designed for scalability
+          across Sub-Saharan Africa. International client engagements are conducted remotely.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+<!-- ═══════════════════════════════════════════
+     VALUES
+═══════════════════════════════════════════ -->
+<section class="values-section">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="tag">Core Values</div>
+      <h2 class="section-title">What Drives <span class="accent">Everything</span> We Build</h2>
+    </div>
+    <div class="values-grid stagger">
+      <div class="value-card fade-up">
+        <span class="value-icon" aria-hidden="true">⚡</span>
+        <h3>Innovation</h3>
+        <p>We embrace emerging technologies not as trends, but as instruments of meaningful change. We build what does not yet exist when existing solutions fall short.</p>
+      </div>
+      <div class="value-card fade-up">
+        <span class="value-icon" aria-hidden="true">🤝</span>
+        <h3>Inclusion</h3>
+        <p>Our products are designed for the many, not the few. We prioritize accessibility, low-cost deployment, and usability for people across all economic levels.</p>
+      </div>
+      <div class="value-card fade-up">
+        <span class="value-icon" aria-hidden="true">🔐</span>
+        <h3>Integrity</h3>
+        <p>We operate transparently and ethically. In financial technology particularly, we prioritize user-sovereign architectures that put control in the hands of the end user.</p>
+      </div>
+      <div class="value-card fade-up">
+        <span class="value-icon" aria-hidden="true">📈</span>
+        <h3>Impact</h3>
+        <p>We measure success not only in revenue but in real-world outcomes: merchants onboarded, farmers empowered, and communities connected to digital infrastructure.</p>
+      </div>
+      <div class="value-card fade-up">
+        <span class="value-icon" aria-hidden="true">🏆</span>
+        <h3>Excellence</h3>
+        <p>Clean architecture, reliable systems, and thoughtful user experience are non-negotiable regardless of the scale or budget of the deployment.</p>
+      </div>
+      <div class="value-card fade-up">
+        <span class="value-icon" aria-hidden="true">🌍</span>
+        <h3>Local First</h3>
+        <p>Rooted in Zambia. Every product is shaped by direct observation of real market gaps in Zambia's informal economy and agricultural sector.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+<!-- ═══════════════════════════════════════════
+     FOUNDER
+═══════════════════════════════════════════ -->
+<section class="founder-section">
+  <div class="container">
+    <div class="section-header fade-up" style="text-align:left;margin-bottom:3.5rem;">
+      <div class="tag">The Founder</div>
+      <h2 class="section-title">Meet the <span class="accent">Person</span><br>Behind Nexus</h2>
+    </div>
+
+    <div class="founder-grid">
+
+      <div class="founder-card fade-up">
+        <div class="founder-avatar" aria-label="Simeon Mwale initials">SM</div>
+        <div class="founder-name">SIMEON MWALE</div>
+        <div class="founder-role">Founder &amp; Lead Engineer</div>
+        <div class="founder-tags">
+          <span class="founder-tag">Full-Stack Dev</span>
+          <span class="founder-tag">Lusaka, Zambia</span>
+          <span class="founder-tag">CS Student</span>
+          <span class="founder-tag">Bitcoin Zambia</span>
+          <span class="founder-tag">BitDevs Zambia</span>
+        </div>
+        <div class="founder-links">
+          <a href="https://github.com/Simeon-Mwale" target="_blank" rel="noopener noreferrer" class="founder-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+            github.com/Simeon-Mwale
+          </a>
+          <a href="mailto:nexusdigitalsolutions.zm@gmail.com" class="founder-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            nexusdigitalsolutions.zm@gmail.com
+          </a>
+          <a href="https://wa.me/260965956772" target="_blank" rel="noopener noreferrer" class="founder-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            +260 965 956 772
+          </a>
+        </div>
+      </div>
+
+      <div class="fade-up">
+        <p class="story-lead">
+          Simeon Mwale is a final-year Computer Science student at DMI St. Eugene University
+          in Lusaka, Zambia — and the founder and lead engineer of Nexus Digital Solutions.
+        </p>
+        <p class="section-body">
+          Simeon brings hands-on experience in full-stack software development and field data work
+          with the Zambia Statistics Agency during the national census. He is an active participant
+          in the Bitcoin Zambia and BitDevs Zambia communities, where he engages in mentorship and
+          grassroots technology education.
+        </p>
+        <p class="section-body">
+          His approach to entrepreneurship is grounded in building for real users. Every product
+          under Nexus Digital Solutions has been shaped by direct observation of market gaps in
+          Zambia's informal economy and agricultural sector — not assumptions made from a desk.
+        </p>
+        <p class="section-body">
+          Simeon also freelances on international platforms including Upwork and Fiverr, bringing
+          global client experience back into the products and services Nexus delivers locally.
+        </p>
+
+        <div class="stack-grid" aria-label="Technology stack">
+          <span class="stack-pill">Next.js</span>
+          <span class="stack-pill">React</span>
+          <span class="stack-pill">TypeScript</span>
+          <span class="stack-pill">Python</span>
+          <span class="stack-pill">FastAPI</span>
+          <span class="stack-pill">SQLite</span>
+          <span class="stack-pill">Prisma</span>
+          <span class="stack-pill">React Native</span>
+          <span class="stack-pill">REST APIs</span>
+          <span class="stack-pill">Lightning Network</span>
+          <span class="stack-pill">AWS</span>
+          <span class="stack-pill">Node.js</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+
+<!-- ═══════════════════════════════════════════
+     CTA BAND
+═══════════════════════════════════════════ -->
+<section class="cta-band">
+  <div class="container" style="position:relative;z-index:1;">
+    <div class="tag" style="margin-bottom:1.5rem;">// NEXT_STEP</div>
+    <h2 class="section-title">Ready to Build<br><span class="accent">Something</span> Together?</h2>
+    <p>Let's connect and turn your idea into a product that works for real people.</p>
+    <div class="cta-actions">
+      <a href="index.html#contact" class="btn-primary">
+        <span>Get in Touch</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="index.html#services" class="btn-outline">
+        <span>View Services</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <img src="images/nexus_logo.svg" alt="Nexus Digital Solutions" />
+      </div>
+      <div class="footer-copy">
+        © 2026 Nexus Digital Solutions · Lusaka, Zambia<br>
+        Connecting the Dots. Building the Future.
+      </div>
+      <div class="footer-pacra">PACRA Registered Business Name</div>
+    </div>
+  </div>
+</footer>
+
+
+<script>
+(function() {
+  'use strict';
+
+  /* ── Navbar scroll ── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  /* ── Mobile nav ── */
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+  const mobileClose = document.getElementById('mobileClose');
+
+  function openMenu() {
+    mobileNav.classList.add('open');
+    hamburger.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMenu() {
+    mobileNav.classList.remove('open');
+    hamburger.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  hamburger.addEventListener('click', openMenu);
+  hamburger.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' ') openMenu(); });
+  mobileClose.addEventListener('click', closeMenu);
+  document.querySelectorAll('.mobile-link').forEach(l => l.addEventListener('click', closeMenu));
+  document.addEventListener('keydown', e => { if(e.key==='Escape') closeMenu(); });
+
+  /* ── Scroll animations ── */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+})();
+</script>
+
+</body>
+</html>
+</file>
+
+<file path="robots.txt">
+User-agent: *
+Allow: /
+
+Sitemap: https://nexus-digital-solution.vercel.app/sitemap.xml
+</file>
+
+<file path="sitemap.xml">
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://nexus-digital-solutions-website.vercel.app/</loc>
+    <lastmod>2026-05-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+</urlset>
+</file>
+
+<file path="index.html">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Nexus Digital Solutions | Connecting the Dots. Building the Future.</title>
+  <meta name="description" content="Nexus Digital Solutions is a PACRA-registered Zambian technology company building innovative digital products and services for Africa. Lusaka, Zambia." />
+  <meta name="keywords" content="Nexus Digital Solutions, Zambia tech, software development, fintech Zambia, digital solutions Lusaka, IT consulting Zambia" />
+  <meta property="og:title" content="Nexus Digital Solutions" />
+  <meta property="og:description" content="Connecting the Dots. Building the Future. — Zambian technology company building for Africa." />
+  <meta property="og:image" content="images/nexus_icon_512.png" />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#060E1A" />
+  <link rel="icon" type="image/x-icon" href="favicon.ico" />
+  <link rel="apple-touch-icon" href="images/nexus_icon_192.png" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-C2NPXEDQBR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-C2NPXEDQBR');
+  </script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/consultation-form.css" />
+
+  <style>
+    /* ── PAGE SWITCHING ── */
+    .nx-page { display: none; }
+    .nx-page.nx-active { display: block; }
+
+    /* ── WORK PAGE ── */
+    .work-hero {
+      min-height: 42vh; display: flex; align-items: flex-end;
+      padding: 9rem 0 4.5rem; position: relative; overflow: hidden;
+    }
+    .work-hero-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,200,232,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,200,232,0.04) 1px, transparent 1px);
+      background-size: 64px 64px;
+      -webkit-mask-image: radial-gradient(ellipse 100% 100% at 50% 100%, black, transparent);
+      mask-image: radial-gradient(ellipse 100% 100% at 50% 100%, black, transparent);
+    }
+    .work-hero-orb-1 { position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none; width:400px;height:400px;background:rgba(0,200,232,0.07);top:-100px;right:-50px; }
+    .work-hero-orb-2 { position:absolute; border-radius:50%; filter:blur(80px); pointer-events:none; width:300px;height:300px;background:rgba(240,160,48,0.05);bottom:0;left:-50px; }
+    .work-hero-inner { position: relative; z-index: 1; }
+
+    /* ── PROJECTS GRID ── */
+    .projects-section { padding: 6rem 0; }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 0;
+      background: var(--border);
+      border: 1px solid var(--border);
+      margin-top: 3.5rem;
+    }
+
+    /* ── PROJECT CARD ── */
+    .project-card {
+      background: var(--navy);
+      padding: 0;
+      position: relative; overflow: hidden;
+      transition: var(--trans);
+      cursor: pointer;
+      display: flex; flex-direction: column;
+    }
+    .project-card:hover { background: rgba(15,34,64,0.9); }
+    .project-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--cyan), var(--gold));
+      transform: scaleX(0); transform-origin: left;
+      transition: transform var(--trans);
+      z-index: 2;
+    }
+    .project-card:hover::before { transform: scaleX(1); }
+
+    /* card header band */
+    .project-card-header {
+      background: var(--navy-mid);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 1.75rem 1.25rem;
+      display: flex; justify-content: space-between; align-items: flex-start;
+      gap: 1rem;
+      position: relative; overflow: hidden;
+    }
+    .project-card-header::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 80% 20%, rgba(0,200,232,0.06), transparent 60%);
+      pointer-events: none;
+    }
+    .project-client-badge {
+      font-family: var(--font-mono);
+      font-size: 0.58rem; letter-spacing: 0.15em;
+      text-transform: uppercase;
+      background: rgba(0,200,232,0.1);
+      border: 1px solid var(--border);
+      color: var(--cyan); padding: 0.25rem 0.65rem;
+      white-space: nowrap;
+    }
+    .project-year {
+      font-family: var(--font-mono);
+      font-size: 0.58rem; letter-spacing: 0.1em;
+      color: var(--muted); text-transform: uppercase;
+      flex-shrink: 0;
+    }
+
+    /* logo display area */
+    .project-logo-area {
+      background: var(--navy-light);
+      border-bottom: 1px solid var(--border);
+      height: 120px;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+    }
+    .project-logo-area::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,200,232,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,200,232,0.03) 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+    .project-logo-initials {
+      font-family: var(--font-mono);
+      font-size: 2.4rem; font-weight: 700;
+      color: var(--cyan); letter-spacing: -0.03em;
+      position: relative; z-index: 1;
+      text-shadow: 0 0 40px rgba(0,200,232,0.4);
+      transition: var(--trans);
+    }
+    .project-card:hover .project-logo-initials {
+      color: var(--gold);
+      text-shadow: 0 0 40px rgba(240,160,48,0.4);
+    }
+    .project-logo-img {
+      position: relative; z-index: 1;
+      max-height: 64px; max-width: 160px;
+      object-fit: contain;
+      filter: brightness(0) invert(1) opacity(0.7);
+      transition: var(--trans);
+    }
+    .project-card:hover .project-logo-img { filter: brightness(0) invert(1) opacity(1); }
+
+    /* card body */
+    .project-card-body { padding: 1.75rem; flex: 1; display: flex; flex-direction: column; }
+    .project-name {
+      font-family: var(--font-mono);
+      font-size: 0.92rem; font-weight: 700;
+      letter-spacing: 0.04em; color: var(--white);
+      margin-bottom: 0.35rem; transition: var(--trans);
+    }
+    .project-card:hover .project-name { color: var(--cyan); }
+    .project-tagline {
+      font-family: var(--font-mono);
+      font-size: 0.62rem; letter-spacing: 0.1em;
+      color: var(--gold); text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+    .project-desc {
+      color: var(--muted); font-size: 0.85rem;
+      line-height: 1.75; flex: 1; margin-bottom: 1.5rem;
+    }
+
+    /* tech tags */
+    .project-tech {
+      display: flex; flex-wrap: wrap; gap: 0.35rem;
+      margin-bottom: 1.5rem;
+    }
+    .tech-tag {
+      font-family: var(--font-mono);
+      font-size: 0.58rem; letter-spacing: 0.06em;
+      color: var(--muted); border: 1px solid var(--border);
+      padding: 0.2rem 0.5rem; text-transform: uppercase;
+      transition: var(--trans);
+    }
+    .project-card:hover .tech-tag {
+      border-color: rgba(0,200,232,0.2);
+      color: var(--cyan);
+    }
+
+    /* metrics row */
+    .project-metrics {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 0; background: var(--border);
+      border: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+    .project-metric {
+      background: var(--navy-mid);
+      padding: 0.75rem;
+      text-align: center; transition: var(--trans);
+    }
+    .project-card:hover .project-metric { background: var(--glass); }
+    .project-metric-val {
+      font-family: var(--font-mono);
+      font-size: 0.9rem; font-weight: 700;
+      color: var(--cyan); line-height: 1; margin-bottom: 0.2rem;
+    }
+    .project-metric-label {
+      font-family: var(--font-mono);
+      font-size: 0.52rem; letter-spacing: 0.1em;
+      color: var(--muted); text-transform: uppercase;
+    }
+
+    /* card footer */
+    .project-card-footer {
+      border-top: 1px solid var(--border);
+      padding: 1.25rem 1.75rem;
+      display: flex; align-items: center;
+      justify-content: space-between; gap: 1rem;
+    }
+    .project-status {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.58rem; letter-spacing: 0.1em;
+      color: var(--muted); text-transform: uppercase;
+    }
+    .project-status-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 8px rgba(34,197,94,0.6);
+      animation: statusPulse 2s ease-in-out infinite;
+    }
+    .project-status-dot.amber {
+      background: var(--gold);
+      box-shadow: 0 0 8px rgba(240,160,48,0.6);
+    }
+    .project-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.62rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--navy);
+      background: var(--cyan); padding: 0.5rem 1rem;
+      text-decoration: none;
+      clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+      transition: var(--trans);
+      border: none; cursor: pointer;
+    }
+    .project-link:hover { background: var(--gold); }
+    .project-link svg { transition: transform var(--trans); }
+    .project-link:hover svg { transform: translateX(3px); }
+
+    /* ── CASE STUDY PANEL ── */
+    .case-study-section { padding: 0 0 6rem; }
+    .case-study-panel {
+      background: var(--glass);
+      border: 1px solid var(--border);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+      position: relative; overflow: hidden;
+    }
+    .case-study-panel::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--cyan), var(--gold), var(--cyan));
+      background-size: 200% 100%;
+      animation: shimmer 4s linear infinite;
+    }
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+    .case-study-header {
+      padding: 2rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .case-study-title-group { flex: 1; }
+    .case-study-label {
+      font-family: var(--font-mono);
+      font-size: 0.58rem; letter-spacing: 0.2em;
+      color: var(--cyan); text-transform: uppercase; margin-bottom: 0.35rem;
+    }
+    .case-study-label::before { content: '// '; }
+    .case-study-name {
+      font-family: var(--font-mono);
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--white); letter-spacing: 0.03em;
+    }
+    .case-live-badge {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.6rem; letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: rgba(34,197,94,0.1);
+      border: 1px solid rgba(34,197,94,0.3);
+      color: #22c55e; padding: 0.4rem 0.875rem;
+    }
+    .case-live-badge.amber {
+      background: rgba(240,160,48,0.1);
+      border: 1px solid rgba(240,160,48,0.3);
+      color: var(--gold-bright);
+    }
+    .case-live-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: #22c55e;
+      box-shadow: 0 0 8px rgba(34,197,94,0.6);
+      animation: statusPulse 2s ease-in-out infinite;
+    }
+    .case-live-dot.amber {
+      background: var(--gold);
+      box-shadow: 0 0 8px rgba(240,160,48,0.6);
+    }
+
+    /* case study body grid */
+    .case-study-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 0; background: var(--border);
+      border-top: 1px solid var(--border);
+    }
+    .case-col {
+      background: var(--navy);
+      padding: 2rem;
+    }
+    .case-col-label {
+      font-family: var(--font-mono);
+      font-size: 0.58rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--cyan);
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .case-col-label::before { content: '◆'; color: var(--gold); font-size: 0.4rem; }
+
+    .case-item {
+      display: flex; align-items: flex-start; gap: 0.6rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.85rem; color: var(--muted); line-height: 1.6;
+    }
+    .case-item::before {
+      content: '→';
+      color: var(--cyan); font-family: var(--font-mono);
+      font-size: 0.7rem; flex-shrink: 0; margin-top: 2px;
+    }
+
+    .case-result {
+      display: flex; align-items: center; gap: 0.75rem;
+      padding: 0.75rem;
+      border: 1px solid var(--border);
+      margin-bottom: 0.5rem;
+      background: rgba(0,200,232,0.03);
+      transition: var(--trans);
+    }
+    .case-result:hover { border-color: var(--cyan); background: var(--cyan-dim); }
+    .case-result-icon { color: var(--gold); font-size: 0.9rem; flex-shrink: 0; }
+    .case-result-text {
+      font-size: 0.83rem; color: var(--muted); line-height: 1.5;
+    }
+    .case-result-text strong { color: var(--white); font-weight: 500; display: block; font-size: 0.78rem; }
+
+    /* stack in case study */
+    .case-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.5rem; }
+
+    /* ── CTA IN WORK PAGE ── */
+    .work-cta {
+      padding: 5rem 0;
+      border-top: 1px solid var(--border);
+      position: relative; overflow: hidden;
+      text-align: center;
+    }
+    .work-cta::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, rgba(0,200,232,0.05) 0%, transparent 70%);
+    }
+
+    /* ── NAV ACTIVE STATE ── */
+    .nav-links a.nx-nav-active {
+      color: var(--cyan) !important;
+      border-color: var(--border) !important;
+      background: var(--cyan-dim) !important;
+    }
+
+    /* ── RESPONSIVE WORK PAGE ── */
+    @media (max-width: 900px) {
+      .case-study-body { grid-template-columns: 1fr; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .case-study-header { flex-direction: column; align-items: flex-start; }
+    }
+    @media (max-width: 600px) {
+      .project-metrics { grid-template-columns: repeat(3,1fr); }
+      .case-study-header { padding: 1.5rem; }
+      .case-col { padding: 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAVIGATION
+═══════════════════════════════════════════ -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a class="nav-logo" href="#" onclick="showPage('home');return false;">
+      <img src="images/nexus_logo.svg" alt="Nexus Digital Solutions" />
+      <div class="nav-logo-text">
+        <span class="nav-logo-main">NEXUS</span>
+        <span class="nav-logo-sub">Digital Solutions</span>
+      </div>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="about.html">About</a></li>
+      <li><a href="#" id="nav-services" onclick="showPage('home');scrollToSection('services');return false;">Services</a></li>
+      <li><a href="#" id="nav-why" onclick="showPage('home');scrollToSection('why');return false;">Why Nexus</a></li>
+      <li><a href="#" id="nav-work" onclick="showPage('work');return false;">Our Work</a></li>
+      <li><a href="#" id="nav-contact" onclick="showPage('home');scrollToSection('contact');return false;">Contact</a></li>
+    </ul>
+
+    <div class="nav-right">
+      <div class="nav-status">
+        <div class="nav-status-dot"></div>
+        <span>Online</span>
+      </div>
+      <a class="nav-cta" href="#" onclick="showPage('home');scrollToSection('consult');return false;">Get in Touch</a>
+      <div class="hamburger" id="hamburger" aria-label="Open menu" role="button" tabindex="0">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-nav" id="mobileNav" role="dialog" aria-modal="true" aria-label="Navigation menu">
+  <button class="mobile-close" id="mobileClose" aria-label="Close menu">✕</button>
+  <div class="mobile-nav-header">// NEXUS_NAV_MENU</div>
+  <a href="about.html" class="mobile-link">About</a>
+  <a href="#" class="mobile-link" onclick="showPage('home');scrollToSection('services');closeMenu();return false;">Services</a>
+  <a href="#" class="mobile-link" onclick="showPage('home');scrollToSection('why');closeMenu();return false;">Why Nexus</a>
+  <a href="#" class="mobile-link" onclick="showPage('work');closeMenu();return false;">Our Work</a>
+  <a href="#" class="mobile-link" onclick="showPage('home');scrollToSection('contact');closeMenu();return false;">Contact</a>
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE: HOME
+═══════════════════════════════════════════ -->
+<div class="nx-page nx-active" id="nx-home">
+
+<!-- HERO -->
+<section id="hero">
+  <canvas id="codeCanvas" aria-hidden="true"></canvas>
+  <div class="hero-grid-bg" aria-hidden="true"></div>
+  <div class="hero-line-h" aria-hidden="true"></div>
+  <div class="hero-line-h" aria-hidden="true"></div>
+  <div class="hero-line-v" aria-hidden="true"></div>
+  <div class="hero-orb orb-1" aria-hidden="true"></div>
+  <div class="hero-orb orb-2" aria-hidden="true"></div>
+  <div class="hero-orb orb-3" aria-hidden="true"></div>
+
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="terminal-badge">
+        <div class="badge-dot" aria-hidden="true"></div>
+        <span>PACRA Registered ·</span>
+        <span class="badge-text">Lusaka, Zambia</span>
+      </div>
+      <div class="hero-eyebrow">Nexus Digital Solutions</div>
+      <h1 class="hero-title">
+        CONNECTING<br>
+        THE <span class="word-gold">DOTS.</span><br>
+        BUILDING THE<br>
+        <span class="word-cyan cursor-blink">FUTURE</span>
+      </h1>
+      <div class="hero-rule" aria-hidden="true">
+        <div class="hero-rule-line"></div>
+        <div class="hero-rule-icon">◈</div>
+        <div class="hero-rule-line" style="flex:0.3;background:linear-gradient(90deg,var(--gold),transparent)"></div>
+      </div>
+      <p class="hero-desc">
+        A Zambian technology company bridging communities, systems, and opportunities
+        through innovative digital products — built for Africa, ready for the world.
+      </p>
+      <div class="hero-actions">
+        <a href="#" class="btn-primary" onclick="scrollToSection('services');return false;">
+          <span>Our Services</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#" class="btn-outline" onclick="scrollToSection('consult');return false;">
+          <span>Work With Us</span>
+        </a>
+      </div>
+      <div class="hero-stack" aria-label="Technology stack">
+        <span class="stack-pill">Next.js</span>
+        <span class="stack-pill">TypeScript</span>
+        <span class="stack-pill">React Native</span>
+        <span class="stack-pill">Python</span>
+        <span class="stack-pill">FastAPI</span>
+        <span class="stack-pill">Prisma</span>
+        <span class="stack-pill">AWS</span>
+        <span class="stack-pill">Lightning</span>
+      </div>
+      <div class="pacra-strip">
+        <strong>PACRA</strong> Business Name · Registered April 2026 · Zambia
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="hero-visual-inner">
+        <div class="hero-ring"></div>
+        <div class="hero-ring"></div>
+        <div class="hero-ring"></div>
+        <div class="hero-logo-center">
+          <img src="images/nexus_logo_stacked.svg" alt="" />
+        </div>
+        <div class="hero-bracket tl"></div>
+        <div class="hero-bracket tr"></div>
+        <div class="hero-bracket bl"></div>
+        <div class="hero-bracket br"></div>
+        <div class="hero-metric">
+          <div class="hero-metric-val">100%</div>
+          <div class="hero-metric-label">Zambian-Owned</div>
+        </div>
+        <div class="hero-metric">
+          <div class="hero-metric-val">24/7</div>
+          <div class="hero-metric-label">Local Support</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Ticker -->
+<div class="ticker-wrap" aria-hidden="true">
+  <div class="ticker-inner" id="tickerInner">
+    <span class="ticker-item">Custom Software Development</span>
+    <span class="ticker-item gold">Cloud Infrastructure</span>
+    <span class="ticker-item">Cybersecurity &amp; Compliance</span>
+    <span class="ticker-item gold">Telecom &amp; API Integration</span>
+    <span class="ticker-item">AI &amp; Data Analytics</span>
+    <span class="ticker-item gold">IT Strategy &amp; Consulting</span>
+    <span class="ticker-item">Managed IT Services</span>
+    <span class="ticker-item gold">Digital Training</span>
+    <span class="ticker-item">Custom Software Development</span>
+    <span class="ticker-item gold">Cloud Infrastructure</span>
+    <span class="ticker-item">Cybersecurity &amp; Compliance</span>
+    <span class="ticker-item gold">Telecom &amp; API Integration</span>
+    <span class="ticker-item">AI &amp; Data Analytics</span>
+    <span class="ticker-item gold">IT Strategy &amp; Consulting</span>
+    <span class="ticker-item">Managed IT Services</span>
+    <span class="ticker-item gold">Digital Training</span>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-visual fade-up" aria-hidden="true">
+        <div class="about-visual-box">
+          <div class="about-corner tl"></div>
+          <div class="about-corner tr"></div>
+          <div class="about-corner bl"></div>
+          <div class="about-corner br"></div>
+          <div class="about-logo-display">
+            <img src="images/nexus_logo_stacked.svg" alt="" />
+          </div>
+        </div>
+        <div class="about-stats">
+          <div class="about-stat"><div class="about-stat-val">2026</div><div class="about-stat-label">Est. Lusaka</div></div>
+          <div class="about-stat"><div class="about-stat-val gold">PACRA</div><div class="about-stat-label">Registered</div></div>
+          <div class="about-stat"><div class="about-stat-val">8+</div><div class="about-stat-label">Service Lines</div></div>
+          <div class="about-stat"><div class="about-stat-val gold">ZMW</div><div class="about-stat-label">Local Pricing</div></div>
+        </div>
+      </div>
+      <div class="about-text fade-up">
+        <div class="tag">About Us</div>
+        <h2 class="section-title">Built on the<br>Principle of <span class="accent">Connection</span></h2>
+        <p class="section-body">Nexus Digital Solutions is a Zambian technology company incorporated in 2026 and registered under PACRA. We exist to serve as the connection point between underserved communities and transformative digital tools.</p>
+        <p class="section-body">Where millions remain excluded from formal systems and lack access to data-driven tools, Nexus bridges that gap — from cloud infrastructure to AI-powered platforms, each product is built with real users in mind.</p>
+        <ul class="values-list">
+          <li><span class="val-icon">⚡</span><div><strong>Innovation</strong> — Embracing emerging technologies as instruments of meaningful change.</div></li>
+          <li><span class="val-icon">🤝</span><div><strong>Inclusion</strong> — Products designed for the many, accessible across all economic levels.</div></li>
+          <li><span class="val-icon">🔐</span><div><strong>Integrity</strong> — Transparent, ethical, and user-sovereign by design.</div></li>
+          <li><span class="val-icon">📈</span><div><strong>Impact</strong> — Success measured in real-world outcomes, not just revenue.</div></li>
+          <li><span class="val-icon">🏆</span><div><strong>Excellence</strong> — Clean architecture, reliable systems, thoughtful UX — always.</div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="section-header fade-up">
+      <div class="tag">What We Do</div>
+      <h2 class="section-title">Our <span class="accent">Services</span></h2>
+      <p>We operate across multiple technology domains — financial technology, software, AI, cloud infrastructure, and consulting — aligned with our PACRA classification.</p>
+    </div>
+    <div class="services-grid stagger">
+      <article class="service-card fade-up"><span class="service-num">01</span><div class="service-icon-wrap">💻</div><h3>Custom Software Development</h3><p>Tailored web and mobile applications built with modern stacks — Next.js, TypeScript, Prisma — designed for Zambian business workflows.</p></article>
+      <article class="service-card fade-up"><span class="service-num">02</span><div class="service-icon-wrap">☁️</div><h3>Cloud &amp; DevOps Infrastructure</h3><p>Secure, scalable cloud architecture on AWS, Azure, or local providers — with CI/CD pipelines, monitoring, and 24/7 local support.</p></article>
+      <article class="service-card fade-up"><span class="service-num">03</span><div class="service-icon-wrap">🔐</div><h3>Cybersecurity &amp; Compliance</h3><p>Risk assessments, penetration testing, and Zambian data protection compliance to safeguard your digital assets and infrastructure.</p></article>
+      <article class="service-card fade-up"><span class="service-num">04</span><div class="service-icon-wrap">📡</div><h3>Telecom &amp; API Integration</h3><p>SMS/USSD gateways, mobile money APIs, Africa's Talking integration, and seamless third-party connectivity solutions.</p></article>
+      <article class="service-card fade-up"><span class="service-num">05</span><div class="service-icon-wrap">📊</div><h3>Data Analytics &amp; AI</h3><p>Machine learning models for forecasting, customer insights, and operational optimization — trained on Zambian market data.</p></article>
+      <article class="service-card fade-up"><span class="service-num">06</span><div class="service-icon-wrap">🤝</div><h3>IT Strategy &amp; Consulting</h3><p>Technology roadmaps, digital transformation planning, and vendor management aligned with your specific business goals.</p></article>
+      <article class="service-card fade-up"><span class="service-num">07</span><div class="service-icon-wrap">🛠️</div><h3>IT Support &amp; Managed Services</h3><p>Proactive monitoring, helpdesk support, patch management, and SLA-backed maintenance to keep your systems running.</p></article>
+      <article class="service-card fade-up"><span class="service-num">08</span><div class="service-icon-wrap">🎓</div><h3>Digital Training &amp; Capacity Building</h3><p>Hands-on workshops, technical upskilling, and knowledge transfer programs for Zambian teams adopting new technologies.</p></article>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- WHY NEXUS -->
+<section id="why">
+  <div class="container">
+    <div class="section-header fade-up" style="text-align:left;margin-bottom:3.5rem;">
+      <div class="tag">Why Choose Nexus</div>
+      <h2 class="section-title">Local Expertise.<br><span class="accent">Global</span> Standards.</h2>
+    </div>
+    <div class="why-inner">
+      <div class="why-content fade-up">
+        <p class="section-body">We don't just deliver code — we deliver business outcomes. Every engagement includes discovery workshops, transparent milestones, and post-launch support for long-term success.</p>
+        <p class="section-body">As a Zambian-owned company, we understand the regulatory, infrastructural, and cultural nuances that impact technology adoption. We build solutions that work in the real Zambia.</p>
+        <ul class="why-feature-list">
+          <li class="why-feature"><div class="why-feature-icon">🇿🇲</div><div><h4>100% Zambian-Owned</h4><p>PACRA registered, locally operated, with deep roots in the Zambian market and economy.</p></div></li>
+          <li class="why-feature"><div class="why-feature-icon">💬</div><div><h4>24/7 Local Support</h4><p>On-the-ground support team with response SLAs — not offshore ticket queues.</p></div></li>
+          <li class="why-feature"><div class="why-feature-icon">🔒</div><div><h4>Security-First Architecture</h4><p>ISO-aligned security practices baked into every product from the ground up.</p></div></li>
+          <li class="why-feature"><div class="why-feature-icon">💰</div><div><h4>Transparent ZMW Pricing</h4><p>Clear, milestone-based billing in Zambian Kwacha. No surprises. No hidden fees.</p></div></li>
+        </ul>
+        <a href="#" class="btn-primary" style="margin-top:2rem;" onclick="scrollToSection('consult');return false;">
+          <span>Start a Project</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="stats-panel fade-up">
+        <div class="stats-panel-header">
+          <div class="stats-panel-title">// NEXUS_METRICS</div>
+          <div class="stats-dots" aria-hidden="true"><div class="stats-dot"></div><div class="stats-dot"></div><div class="stats-dot"></div></div>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-box"><span class="stat-num">100%</span><span class="stat-label">Zambian-Owned</span></div>
+          <div class="stat-box"><span class="stat-num gold">24/7</span><span class="stat-label">Local Support</span></div>
+          <div class="stat-box"><span class="stat-num">ISO</span><span class="stat-label">Security-First</span></div>
+          <div class="stat-box"><span class="stat-num gold">ZMW</span><span class="stat-label">Transparent Pricing</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header fade-up" style="text-align:left;margin-bottom:3.5rem;">
+      <div class="tag">Contact</div>
+      <h2 class="section-title">Let's <span class="accent">Connect</span></h2>
+    </div>
+    <div class="contact-grid">
+      <div class="fade-up">
+        <p class="section-body" style="margin-bottom:2rem;">Ready to build something meaningful? Whether you're a business looking for a technology partner, a developer wanting to collaborate, or an investor — we'd love to hear from you.</p>
+        <a class="contact-detail contact-clickable" href="https://maps.google.com/?q=Lusaka,Zambia" target="_blank" rel="noopener noreferrer">
+          <div class="contact-icon" aria-hidden="true">📍</div>
+          <div class="contact-info"><h4>Location</h4><span>Lusaka, Zambia</span></div>
+          <svg class="contact-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </a>
+        <a class="contact-detail contact-clickable" href="https://wa.me/260965956772" target="_blank" rel="noopener noreferrer">
+          <div class="contact-icon" aria-hidden="true">📞</div>
+          <div class="contact-info"><h4>Phone / WhatsApp</h4><span>+260 965 956 772</span></div>
+          <svg class="contact-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </a>
+        <a class="contact-detail contact-clickable" href="mailto:nexusdigitalsolutions.zm@gmail.com">
+          <div class="contact-icon" aria-hidden="true">✉️</div>
+          <div class="contact-info"><h4>Email</h4><span>nexusdigitalsolutions.zm@gmail.com</span></div>
+          <svg class="contact-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M7 17L17 7M7 7h10v10"/></svg>
+        </a>
+        <div class="contact-detail">
+          <div class="contact-icon" aria-hidden="true">🏛</div>
+          <div class="contact-info"><h4>Registration</h4><span>PACRA Business Name — Reg. April 2026</span></div>
+        </div>
+        <div class="social-links" role="list" aria-label="Social media links">
+          <a class="social-link" href="https://www.facebook.com/share/1Ks3XhV6J7/" target="_blank" rel="noopener noreferrer" role="listitem" aria-label="Facebook">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg><span>Facebook</span>
+          </a>
+          <a class="social-link" href="https://www.instagram.com/nexus_digital_solutions_1/" target="_blank" rel="noopener noreferrer" role="listitem" aria-label="Instagram">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg><span>Instagram</span>
+          </a>
+          <a class="social-link" href="https://wa.me/260965956772" target="_blank" rel="noopener noreferrer" role="listitem" aria-label="WhatsApp">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg><span>WhatsApp</span>
+          </a>
+          <a class="social-link" href="https://github.com/Simeon-Mwale" target="_blank" rel="noopener noreferrer" role="listitem" aria-label="GitHub">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg><span>GitHub</span>
+          </a>
+        </div>
+      </div>
+      <div class="fade-up">
+        <div class="contact-form-wrap">
+          <div class="form-header">Send us a message</div>
+          <form class="contact-form" id="contactForm" action="https://formspree.io/f/mkoynllz" method="POST" novalidate>
+            <div class="form-row">
+              <div class="form-group"><label for="fname">First Name</label><input type="text" id="fname" name="fname" placeholder="Chanda" required autocomplete="given-name" /></div>
+              <div class="form-group"><label for="lname">Last Name</label><input type="text" id="lname" name="lname" placeholder="Mwansa" required autocomplete="family-name" /></div>
+            </div>
+            <div class="form-group"><label for="email">Email Address</label><input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" /></div>
+            <div class="form-group">
+              <label for="service">Service of Interest</label>
+              <select id="service" name="service">
+                <option value="">— Select a service —</option>
+                <option>Custom Software Development</option>
+                <option>Cloud &amp; DevOps Infrastructure</option>
+                <option>Cybersecurity &amp; Compliance</option>
+                <option>Telecom &amp; API Integration</option>
+                <option>Data Analytics &amp; AI</option>
+                <option>IT Strategy &amp; Consulting</option>
+                <option>IT Support &amp; Managed Services</option>
+                <option>Digital Training &amp; Capacity Building</option>
+                <option>Other / General Inquiry</option>
+              </select>
+            </div>
+            <div class="form-group"><label for="message">Message</label><textarea id="message" name="message" placeholder="Tell us about your project or inquiry…" required></textarea></div>
+            <button type="submit" class="btn-submit" id="submitBtn">
+              <span>Send Message</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+            <p class="form-note" id="formNote" role="status" aria-live="polite">✓ Message received — we'll be in touch within 24 hours.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ═══════════════════════════════════════════
+     CONSULTATION REQUEST — Two-step wizard
+═══════════════════════════════════════════ -->
+<section class="consult-section" id="consult">
+  <div class="container">
+    <div class="consult-inner">
+
+      <div class="section-header fade-up" style="text-align:left;margin-bottom:2.5rem;">
+        <div class="tag">Get Started</div>
+        <h2 class="section-title">Request a <span class="accent">Free Consultation</span></h2>
+        <p style="color:var(--muted);font-size:0.95rem;margin-top:0.5rem;">
+          Tell us what you're solving for — we'll come back with a plan, not a sales pitch.
+        </p>
+      </div>
+
+      <div class="consult-panel fade-up">
+
+        <div class="consult-header">
+          <div class="consult-eyebrow">NEXUS_CONSULT_REQUEST</div>
+          <h3 class="consult-title" id="consultTitle">Step 1 — Your Priorities</h3>
+
+          <div class="consult-steps" aria-hidden="true">
+            <div class="consult-step is-active" id="consultStepInd1">
+              <span class="consult-step-num">1</span>
+              <span>Priorities</span>
+            </div>
+            <div class="consult-step-track" id="consultTrack"></div>
+            <div class="consult-step" id="consultStepInd2">
+              <span class="consult-step-num">2</span>
+              <span>Your Details</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="consult-body">
+
+          <form id="consultForm" novalidate>
+
+            <!-- ── STEP 1 ── -->
+            <div class="consult-step-panel is-active" id="consultStep1" role="group" aria-labelledby="consultTitle">
+              <span class="consult-field-label">What are your immediate priorities? <span class="consult-required">*</span></span>
+              <p class="consult-field-hint">Select everything that applies — this shapes how we scope the consult.</p>
+
+              <div class="consult-priority-grid">
+                <div class="consult-priority">
+                  <input type="checkbox" id="pr1" name="priorities" value="Reduce losses & fraud" />
+                  <label for="pr1"><span class="consult-priority-box" aria-hidden="true"></span>Reduce operational losses &amp; fraud</label>
+                </div>
+                <div class="consult-priority">
+                  <input type="checkbox" id="pr2" name="priorities" value="Automate manual processes" />
+                  <label for="pr2"><span class="consult-priority-box" aria-hidden="true"></span>Automate manual processes</label>
+                </div>
+                <div class="consult-priority">
+                  <input type="checkbox" id="pr3" name="priorities" value="Real-time visibility & reporting" />
+                  <label for="pr3"><span class="consult-priority-box" aria-hidden="true"></span>Real-time visibility &amp; reporting</label>
+                </div>
+                <div class="consult-priority">
+                  <input type="checkbox" id="pr4" name="priorities" value="Scale across multiple branches" />
+                  <label for="pr4"><span class="consult-priority-box" aria-hidden="true"></span>Scale across multiple branches</label>
+                </div>
+                <div class="consult-priority">
+                  <input type="checkbox" id="pr5" name="priorities" value="Mobile money / payments integration" />
+                  <label for="pr5"><span class="consult-priority-box" aria-hidden="true"></span>Mobile money / payments integration</label>
+                </div>
+                <div class="consult-priority">
+                  <input type="checkbox" id="pr7" name="priorities" value="Interested in piloting Nexus Flow OS" />
+                  <label for="pr7"><span class="consult-priority-box" aria-hidden="true"></span>Interested in piloting Nexus Flow OS</label>
+                </div>
+                <div class="consult-priority">
+                  <input type="checkbox" id="pr6" name="priorities" value="Not sure yet — general inquiry" />
+                  <label for="pr6"><span class="consult-priority-box" aria-hidden="true"></span>Not sure yet — general inquiry</label>
+                </div>
+              </div>
+              <p class="consult-error" id="consultPriorityError" role="alert"></p>
+
+              <div class="consult-input-group">
+                <label class="consult-field-label" for="consultCity">Where is your office? <span class="consult-required">*</span></label>
+                <input type="text" class="consult-input" id="consultCity" name="city" placeholder="e.g. Lusaka, Zambia" required />
+                <p class="consult-error" id="consultCityError" role="alert"></p>
+              </div>
+
+              <div class="consult-actions">
+                <button type="button" class="consult-btn-back" disabled>← Back</button>
+                <button type="button" class="consult-btn-next" id="consultNextBtn">
+                  <span>Continue</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- ── STEP 2 ── -->
+            <div class="consult-step-panel" id="consultStep2" role="group" aria-labelledby="consultTitle">
+              <div class="consult-input-row">
+                <div class="consult-input-group">
+                  <label class="consult-field-label" for="consultFirst">First Name <span class="consult-required">*</span></label>
+                  <input type="text" class="consult-input" id="consultFirst" name="fname" placeholder="Chanda" required autocomplete="given-name" />
+                </div>
+                <div class="consult-input-group">
+                  <label class="consult-field-label" for="consultLast">Last Name <span class="consult-required">*</span></label>
+                  <input type="text" class="consult-input" id="consultLast" name="lname" placeholder="Mwansa" required autocomplete="family-name" />
+                </div>
+              </div>
+
+              <div class="consult-input-group">
+                <label class="consult-field-label" for="consultEmail">Email Address <span class="consult-required">*</span></label>
+                <input type="email" class="consult-input" id="consultEmail" name="email" placeholder="you@example.com" required autocomplete="email" />
+              </div>
+
+              <div class="consult-input-row">
+                <div class="consult-input-group">
+                  <label class="consult-field-label" for="consultPhone">Phone / WhatsApp</label>
+                  <input type="tel" class="consult-input" id="consultPhone" name="phone" placeholder="+260…" autocomplete="tel" />
+                </div>
+                <div class="consult-input-group">
+                  <label class="consult-field-label" for="consultCompany">Company</label>
+                  <input type="text" class="consult-input" id="consultCompany" name="company" placeholder="Optional" autocomplete="organization" />
+                </div>
+              </div>
+
+              <p class="consult-error" id="consultStep2Error" role="alert"></p>
+
+              <div class="consult-actions">
+                <button type="button" class="consult-btn-back" id="consultBackBtn">← Back</button>
+                <button type="submit" class="consult-btn-submit" id="consultSubmitBtn">
+                  <span>Request Consultation</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+              </div>
+            </div>
+
+          </form>
+
+          <!-- ── SUCCESS ── -->
+          <div class="consult-success" id="consultSuccess" role="status" aria-live="polite">
+            <div class="consult-success-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+            </div>
+            <div class="consult-success-title">Request received</div>
+            <p class="consult-success-body">We'll review your priorities and follow up within 24 hours to schedule your free consultation.</p>
+          </div>
+
+        </div>
+
+        <div class="consult-trust">
+          <div class="consult-trust-item">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>
+            <span>No obligation</span>
+          </div>
+          <div class="consult-trust-item">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            <span>Reply within 24hrs</span>
+          </div>
+          <div class="consult-trust-item">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z"/></svg>
+            <span>PACRA registered</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+</div><!-- end #nx-home -->
+
+
+<!-- ═══════════════════════════════════════════
+     PAGE: WORK
+═══════════════════════════════════════════ -->
+<div class="nx-page" id="nx-work">
+
+  <!-- Work Hero -->
+  <section class="work-hero">
+    <div class="work-hero-grid" aria-hidden="true"></div>
+    <div class="work-hero-orb-1" aria-hidden="true"></div>
+    <div class="work-hero-orb-2" aria-hidden="true"></div>
+    <div class="container work-hero-inner">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="#" onclick="showPage('home');return false;">Home</a>
+        <span aria-hidden="true">›</span>
+        <span aria-current="page">Our Work</span>
+      </nav>
+      <h1 class="page-title">Our <span class="accent">Work</span></h1>
+      <p class="page-subtitle">Client Projects &amp; Case Studies</p>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- Projects Grid -->
+  <section class="projects-section">
+    <div class="container">
+      <div class="section-header fade-up" style="text-align:left;">
+        <div class="tag">Portfolio</div>
+        <h2 class="section-title">Projects We've <span class="accent">Shipped</span></h2>
+        <p style="color:var(--muted);font-size:0.95rem;margin-top:0.5rem;">Real products built for real clients — designed, developed, and deployed by Nexus.</p>
+      </div>
+
+      <div class="projects-grid">
+
+        <!-- PROJECT CARD: NEXUS FLOW OS -->
+        <div class="project-card fade-up">
+          <div class="project-card-header">
+            <span class="project-client-badge">SaaS · Fuel &amp; Retail Operations</span>
+            <span class="project-year">2026</span>
+          </div>
+          <div class="project-logo-area">
+            <span class="project-logo-initials">FLOW</span>
+          </div>
+          <div class="project-card-body">
+            <div class="project-name">Nexus Flow OS</div>
+            <div class="project-tagline">Multi-Branch Fuel &amp; Business Operations Platform</div>
+            <p class="project-desc">
+              An operations platform built for multi-branch fuel retailers — covering attendant shift
+              management, dip-reading reconciliation, mobile money payment capture, and executive dashboards
+              with true gross margin visibility. Architected to accommodate both manual and automated
+              (forecourt hardware) data sources as sites scale up.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag">Next.js</span>
+              <span class="tech-tag">TypeScript</span>
+              <span class="tech-tag">FastAPI</span>
+              <span class="tech-tag">PostgreSQL</span>
+              <span class="tech-tag">Redis</span>
+              <span class="tech-tag">Docker</span>
+            </div>
+            <div class="project-metrics">
+              <div class="project-metric">
+                <div class="project-metric-val">Multi</div>
+                <div class="project-metric-label">Branch Ready</div>
+              </div>
+              <div class="project-metric">
+                <div class="project-metric-val">2</div>
+                <div class="project-metric-label">MoMo Rails</div>
+              </div>
+              <div class="project-metric">
+                <div class="project-metric-val">Live</div>
+                <div class="project-metric-label">Variance Alerts</div>
+              </div>
+            </div>
+          </div>
+          <div class="project-card-footer">
+            <div class="project-status">
+              <div class="project-status-dot amber"></div>
+              <span>Pilot Open</span>
+            </div>
+            <button type="button" class="project-link" onclick="showPage('home');scrollToSection('consult');">
+              <span>Request a Demo</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- PROJECT CARD: TZDA -->
+        <div class="project-card fade-up">
+          <div class="project-card-header">
+            <span class="project-client-badge">Non-Profit · Civic Tech</span>
+            <span class="project-year">2026</span>
+          </div>
+          <div class="project-logo-area">
+            <span class="project-logo-initials">TZDA</span>
+          </div>
+          <div class="project-card-body">
+            <div class="project-name">The Zambia Debate Association</div>
+            <div class="project-tagline">National Debate Body · thezdebate.org</div>
+            <p class="project-desc">
+              Full official website for Zambia's national debate body — built from scratch and launched live.
+              Covers membership registration, event listings, a publications library with Google Drive integration,
+              and a contact system powered by Formspree.
+            </p>
+            <div class="project-tech">
+              <span class="tech-tag">HTML5</span>
+              <span class="tech-tag">CSS3</span>
+              <span class="tech-tag">JavaScript</span>
+              <span class="tech-tag">Formspree</span>
+              <span class="tech-tag">Google Drive</span>
+              <span class="tech-tag">Vercel</span>
+              <span class="tech-tag">Google Analytics</span>
+            </div>
+            <div class="project-metrics">
+              <div class="project-metric">
+                <div class="project-metric-val">6</div>
+                <div class="project-metric-label">Pages</div>
+              </div>
+              <div class="project-metric">
+                <div class="project-metric-val">10</div>
+                <div class="project-metric-label">Provinces</div>
+              </div>
+              <div class="project-metric">
+                <div class="project-metric-val">2</div>
+                <div class="project-metric-label">Forms Live</div>
+              </div>
+            </div>
+          </div>
+          <div class="project-card-footer">
+            <div class="project-status">
+              <div class="project-status-dot"></div>
+              <span>Live &amp; Active</span>
+            </div>
+            <a href="https://thezdebate.org" target="_blank" rel="noopener noreferrer" class="project-link">
+              <span>Visit Site</span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M7 7h10v10"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Study: Nexus Flow OS -->
+  <section class="case-study-section">
+    <div class="container">
+      <div class="section-header fade-up" style="text-align:left;margin-bottom:2.5rem;">
+        <div class="tag">Case Study</div>
+        <h2 class="section-title">Deep Dive: <span class="accent">Nexus Flow OS</span></h2>
+      </div>
+
+      <div class="case-study-panel fade-up">
+        <div class="case-study-header">
+          <div class="case-study-title-group">
+            <div class="case-study-label">Case Study 002</div>
+            <div class="case-study-name">Nexus Flow OS — Multi-Branch Fuel &amp; Business Operations Platform</div>
+          </div>
+          <div class="case-live-badge amber">
+            <div class="case-live-dot amber"></div>
+            <span>In Active Development · Pilot Open</span>
+          </div>
+        </div>
+
+        <div class="case-study-body">
+
+          <!-- Col 1: Brief & Challenge -->
+          <div class="case-col">
+            <div class="case-col-label">Brief &amp; Challenge</div>
+            <div class="case-item">Fuel retailers running multiple branches lack real-time visibility into shift-level cash, stock, and variance — most still rely on paper dip books and end-of-day reconciliation.</div>
+            <div class="case-item">Attendant handovers and cash drops needed a live, auditable trail instead of a manual book checked once per shift.</div>
+            <div class="case-item">Mobile money is now a standard payment method at the pump — the platform needed native support for the two dominant Zambian rails, not a bolt-on.</div>
+            <div class="case-item">Architecture had to accommodate stations at very different maturity levels — from fully manual dip readings to future forecourt hardware integration — without a rebuild.</div>
+            <div class="case-col-label" style="margin-top:1.5rem;">Tech Stack</div>
+            <div class="case-stack">
+              <span class="stack-pill">Next.js</span>
+              <span class="stack-pill">TypeScript</span>
+              <span class="stack-pill">FastAPI</span>
+              <span class="stack-pill">PostgreSQL</span>
+              <span class="stack-pill">Redis</span>
+              <span class="stack-pill">Docker</span>
+              <span class="stack-pill">nginx</span>
+            </div>
+          </div>
+
+          <!-- Col 2: Solution -->
+          <div class="case-col" style="background:rgba(10,22,40,0.6);">
+            <div class="case-col-label">Solution &amp; Execution</div>
+            <div class="case-item">Built a flexible Nozzle model that replaces hardcoded pump-meter columns — the same schema scales from a single-pump site to a multi-branch network.</div>
+            <div class="case-item">Designed a timezone-aware dynamic shift-boundary and dip-reading gate system, so shift handovers are enforced by the platform rather than trusted to a paper log.</div>
+            <div class="case-item">Implemented self-healing inventory reconciliation with threshold-based variance detection, automatically flagging incidents instead of waiting for a manual month-end review.</div>
+            <div class="case-item">Added a mobile money payment modal for attendants covering Airtel and MTN — the two payment rails already in daily use at Zambian filling stations.</div>
+            <div class="case-item">Built an executive dashboard showing true gross margin with fuel cost factored in, plus a branch-scoped finance page for revenue and expense tracking.</div>
+            <div class="case-item">Containerized the full stack with Docker Compose and nginx for consistent, repeatable deployment across branch sites.</div>
+          </div>
+
+          <!-- Col 3: Results -->
+          <div class="case-col">
+            <div class="case-col-label">Deliverables &amp; Status</div>
+            <div class="case-result">
+              <span class="case-result-icon">✅</span>
+              <div class="case-result-text"><strong>Shift &amp; Dip Workflow</strong>Dynamic shift boundaries, gated dip-reading entry</div>
+            </div>
+            <div class="case-result">
+              <span class="case-result-icon">✅</span>
+              <div class="case-result-text"><strong>Variance Detection</strong>Threshold-based incident creation, self-healing stock correction</div>
+            </div>
+            <div class="case-result">
+              <span class="case-result-icon">✅</span>
+              <div class="case-result-text"><strong>Mobile Money Payments</strong>Airtel &amp; MTN payment capture for attendants</div>
+            </div>
+            <div class="case-result">
+              <span class="case-result-icon">✅</span>
+              <div class="case-result-text"><strong>Executive Dashboard</strong>True gross margin, branch-scoped finance view</div>
+            </div>
+            <div class="case-result">
+              <span class="case-result-icon">✅</span>
+              <div class="case-result-text"><strong>Automation-Ready Architecture</strong>Built to accept forecourt hardware data alongside manual entry</div>
+            </div>
+            <div class="case-result">
+              <span class="case-result-icon">🔄</span>
+              <div class="case-result-text"><strong>Pilot Open</strong>Not yet piloted — open to onboarding a first pilot partner</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Study: TZDA -->
+  <section class="case-study-section">
+    <div class="container">
+      <div class="section-header fade-up" style="text-align:left;margin-bottom:2.5rem;">
+        <div class="tag">Case Study</div>
+        <h2 class="section-title">Deep Dive: <span class="accent">TZDA</span></h2>
+      </div>
+
+      <div class="case-study-panel fade-up">
+        <div class="case-study-header">
+          <div class="case-study-title-group">
+            <div class="case-study-label">Case Study 001</div>
+            <div class="case-study-name">The Zambia Debate Association — Official Website</div>
+          </div>
+          <div class="case-live-badge">
+            <div class="case-live-dot"></div>
+            <span>Live at thezdebate.org</span>
+          </div>
+        </div>
+
+        <div class="case-study-body">
+
+          <!-- Col 1: Brief & Challenge -->
+          <div class="case-col">
+            <div class="case-col-label">Brief &amp; Challenge</div>
+            <div class="case-item">TZDA needed a professional national web presence to establish credibility as Zambia's official debate body.</div>
+            <div class="case-item">Required membership registration, document distribution, event listings, and contact functionality — all in one site.</div>
+            <div class="case-item">No existing infrastructure — built entirely from scratch including branding integration, form backend, and file hosting.</div>
+            <div class="case-item">Had to be mobile-first, fast-loading, and maintainable without a CMS or technical team on the client side.</div>
+            <div class="case-col-label" style="margin-top:1.5rem;">Tech Stack</div>
+            <div class="case-stack">
+              <span class="stack-pill">HTML5</span>
+              <span class="stack-pill">CSS3</span>
+              <span class="stack-pill">Vanilla JS</span>
+              <span class="stack-pill">Formspree</span>
+              <span class="stack-pill">Google Drive API</span>
+              <span class="stack-pill">Google Analytics</span>
+              <span class="stack-pill">Vercel</span>
+            </div>
+          </div>
+
+          <!-- Col 2: Solution -->
+          <div class="case-col" style="background:rgba(10,22,40,0.6);">
+            <div class="case-col-label">Solution &amp; Execution</div>
+            <div class="case-item">Built a single-page application with JS-driven page switching — no reload, no framework dependency, zero build tooling required.</div>
+            <div class="case-item">Designed a bespoke green-and-gold brand system matching TZDA's national identity with custom CSS variables throughout.</div>
+            <div class="case-item">Integrated Formspree for membership applications and contact messages — submissions route directly to the association's inbox.</div>
+            <div class="case-item">Hosted constitution PDF on Google Drive with direct download and preview links — no server storage costs.</div>
+            <div class="case-item">Added Google Analytics (G-tag) for visitor tracking and reporting to leadership — verifiable data for board reports.</div>
+            <div class="case-item">Deployed on Vercel with instant global CDN — sub-second load times across Zambia on mobile networks.</div>
+          </div>
+
+          <!-- Col 3: Results -->
+          <div class="case-col">
+            <div class="case-col-label">Deliverables &amp; Results</div>
+            <div class="case-result">
+              <span class="case-result-icon">✅</span>
+              <div class="case-result-text"><strong>6-Page Full Website</strong>Home, About, Events, Publications, Join, Contact</div>
+            </div>
+            <div class="case-result">
+              <span class="case-result-icon">✅</span>
+              <div class="case-result-text"><strong>Live Membership Form</strong>Routes to TZDA inbox via Formspree</div>
+            </div>
+            <div class="case-result">
+              <span class="case-result-icon">✅</span>
+              <div class="case-result-text"><strong>Document Library</strong>Constitution live, 5 more docs queued</div>
+            </div>
+            <div class="case-result">
+              <span class="case-result-icon">✅</span>
+              <div class="case-result-text"><strong>Analytics Dashboard</strong>GA4 tracking — page views, users, devices</div>
+            </div>
+            <div class="case-result">
+              <span class="case-result-icon">✅</span>
+              <div class="case-result-text"><strong>Mobile Responsive</strong>Tested iOS &amp; Android across screen sizes</div>
+            </div>
+            <div class="case-result">
+              <span class="case-result-icon">✅</span>
+              <div class="case-result-text"><strong>Deployed &amp; Live</strong>thezdebate.org — Zambia's national debate platform</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Work Page CTA -->
+  <section class="work-cta">
+    <div class="container" style="position:relative;z-index:1;">
+      <div class="tag" style="margin-bottom:1.5rem;">// NEXT_PROJECT</div>
+      <h2 class="section-title">Want to Be Our<br><span class="accent">Next</span> Case Study?</h2>
+      <p style="color:var(--muted);max-width:480px;margin:0 auto 2rem;font-size:0.95rem;">We're ready to build your next digital product — from concept to deployment.</p>
+      <div class="cta-actions">
+        <a href="#" class="btn-primary" onclick="showPage('home');scrollToSection('consult');return false;">
+          <span>Start a Project</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#" class="btn-outline" onclick="showPage('home');scrollToSection('services');return false;">
+          <span>View Services</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end #nx-work -->
+
+
+<!-- ═══════════════════════════════════════════
+     FOOTER (shared)
+═══════════════════════════════════════════ -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo"><img src="images/nexus_logo.svg" alt="Nexus Digital Solutions" /></div>
+      <div class="footer-copy">© 2026 Nexus Digital Solutions · Lusaka, Zambia<br>Connecting the Dots. Building the Future.</div>
+      <div class="footer-pacra">PACRA Registered Business Name</div>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp Float -->
+<a href="https://wa.me/260965956772" target="_blank" rel="noopener noreferrer" class="wa-float" aria-label="Chat with us on WhatsApp">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="white" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+
+<script>
+(function() {
+  'use strict';
+
+  /* ═══════════════════════════════════
+     PAGE SWITCHING
+  ═══════════════════════════════════ */
+  var currentPage = 'home';
+
+  window.showPage = function(page) {
+    // hide all pages
+    var pages = document.querySelectorAll('.nx-page');
+    pages.forEach(function(p) { p.classList.remove('nx-active'); });
+
+    // show target
+    var target = document.getElementById('nx-' + page);
+    if (target) {
+      target.classList.add('nx-active');
+      currentPage = page;
+    }
+
+    // update nav active state
+    document.querySelectorAll('.nav-links a').forEach(function(a) {
+      a.classList.remove('nx-nav-active');
+    });
+    var navEl = document.getElementById('nav-' + page);
+    if (navEl) navEl.classList.add('nx-nav-active');
+
+    // scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // re-trigger fade-up animations on work page
+    if (page === 'work') {
+      setTimeout(function() {
+        document.querySelectorAll('#nx-work .fade-up').forEach(function(el) {
+          el.classList.remove('visible');
+          void el.offsetWidth; // reflow
+        });
+        var obs = new IntersectionObserver(function(entries) {
+          entries.forEach(function(e) {
+            if (e.isIntersecting) {
+              e.target.classList.add('visible');
+              obs.unobserve(e.target);
+            }
+          });
+        }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+        document.querySelectorAll('#nx-work .fade-up').forEach(function(el) {
+          obs.observe(el);
+        });
+      }, 50);
+    }
+
+    // GA page view tracking
+    if (typeof gtag !== 'undefined') {
+      gtag('event', 'page_view', { page_title: page, page_path: '/' + page });
+    }
+  };
+
+  /* scroll to section within home page */
+  window.scrollToSection = function(id) {
+    // make sure home is showing first
+    if (currentPage !== 'home') {
+      showPage('home');
+      setTimeout(function() {
+        var el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 120);
+    } else {
+      var el = document.getElementById(id);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  /* ── Navbar scroll ── */
+  var navbar = document.getElementById('navbar');
+  var lastScroll = 0;
+  window.addEventListener('scroll', function() {
+    var y = window.scrollY;
+    navbar.classList.toggle('scrolled', y > 40);
+    lastScroll = y;
+  }, { passive: true });
+
+  /* ── Mobile nav ── */
+  var hamburger = document.getElementById('hamburger');
+  var mobileNav = document.getElementById('mobileNav');
+  var mobileClose = document.getElementById('mobileClose');
+
+  function openMenu() {
+    mobileNav.classList.add('open');
+    hamburger.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  window.closeMenu = function() {
+    mobileNav.classList.remove('open');
+    hamburger.classList.remove('open');
+    document.body.style.overflow = '';
+  };
+
+  hamburger.addEventListener('click', openMenu);
+  hamburger.addEventListener('keydown', function(e) { if(e.key==='Enter'||e.key===' ') openMenu(); });
+  mobileClose.addEventListener('click', closeMenu);
+  document.querySelectorAll('.mobile-link').forEach(function(l) {
+    l.addEventListener('click', closeMenu);
+  });
+  mobileNav.addEventListener('click', function(e) { if(e.target===mobileNav) closeMenu(); });
+  document.addEventListener('keydown', function(e) { if(e.key==='Escape') closeMenu(); });
+
+  /* ── Scroll animations (home page) ── */
+  var homeObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        homeObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('#nx-home .fade-up').forEach(function(el) {
+    homeObserver.observe(el);
+  });
+
+  /* ── Active nav highlight on scroll (home only) ── */
+  var sections = document.querySelectorAll('#nx-home section[id]');
+  var navLinks = document.querySelectorAll('.nav-links a[onclick*="scrollToSection"]');
+  window.addEventListener('scroll', function() {
+    if (currentPage !== 'home') return;
+    var current = '';
+    sections.forEach(function(s) { if (window.scrollY >= s.offsetTop - 120) current = s.id; });
+    navLinks.forEach(function(a) {
+      var matches = a.getAttribute('onclick') && a.getAttribute('onclick').includes("'" + current + "'");
+      a.style.color = matches ? 'var(--cyan)' : '';
+    });
+  }, { passive: true });
+
+  /* ── Contact form ── */
+  var form = document.getElementById('contactForm');
+  var formNote = document.getElementById('formNote');
+  var submitBtn = document.getElementById('submitBtn');
+
+  if (form) {
+    form.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      var required = form.querySelectorAll('[required]');
+      var valid = true;
+      required.forEach(function(field) {
+        if (!field.value.trim()) { field.style.borderColor = '#f87171'; valid = false; }
+        else field.style.borderColor = '';
+      });
+      if (!valid) return;
+
+      submitBtn.querySelector('span').textContent = 'Sending…';
+      submitBtn.disabled = true;
+
+      try {
+        var res = await fetch('https://formspree.io/f/mkoynllz', {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          formNote.classList.add('show');
+          form.reset();
+          submitBtn.querySelector('span').textContent = 'Sent ✓';
+        } else {
+          submitBtn.querySelector('span').textContent = 'Error — email us directly';
+          submitBtn.disabled = false;
+        }
+      } catch(err) {
+        submitBtn.querySelector('span').textContent = 'Error — email us directly';
+        submitBtn.disabled = false;
+      }
+    });
+    form.querySelectorAll('input, textarea, select').forEach(function(field) {
+      field.addEventListener('input', function() { field.style.borderColor = ''; });
+    });
+  }
+
+  /* ── Code rain canvas ── */
+  var canvas = document.getElementById('codeCanvas');
+  if (canvas) {
+    var ctx = canvas.getContext('2d');
+    var cols, drops, rafId;
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      cols = Math.floor(canvas.width / 22);
+      drops = Array(cols).fill(1).map(function() { return Math.random() * -50; });
+    }
+    var chars = '01アイウエオカキクケコNEXUSZAMBIA<>{}[]|\\/-_=+';
+    function draw() {
+      ctx.fillStyle = 'rgba(6,14,26,0.06)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#00C8E8';
+      ctx.font = '13px "Space Mono", monospace';
+      for (var i = 0; i < drops.length; i++) {
+        var char = chars[Math.floor(Math.random() * chars.length)];
+        ctx.fillText(char, i * 22, drops[i] * 22);
+        if (drops[i] * 22 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+        drops[i] += 0.4;
+      }
+      rafId = requestAnimationFrame(draw);
+    }
+    if (window.matchMedia('(min-width: 900px)').matches) {
+      resize();
+      draw();
+      window.addEventListener('resize', function() {
+        cancelAnimationFrame(rafId);
+        resize();
+        draw();
+      }, { passive: true });
+    }
+  }
+
+})();
+</script>
+<script src="js/consultation-form.js"></script>
+</body>
+</html>
+</file>
+
+</files>

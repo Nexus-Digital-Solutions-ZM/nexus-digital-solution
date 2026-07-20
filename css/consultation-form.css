@@ -1,0 +1,382 @@
+/* ═══════════════════════════════════════════
+   CONSULTATION REQUEST — Two-step wizard
+   Drop-in stylesheet. Uses the same custom
+   properties already defined in css/style.css
+   (--cyan, --gold, --navy, --navy-mid, --navy-light,
+   --border, --muted, --white, --glass, --trans,
+   --font-mono). No new variables introduced.
+═══════════════════════════════════════════ */
+
+.consult-section {
+  padding: 6rem 0;
+  border-top: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.consult-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 20% 0%, rgba(0,200,232,0.05), transparent 60%);
+  pointer-events: none;
+}
+
+.consult-inner {
+  position: relative; z-index: 1;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.consult-panel {
+  background: var(--glass);
+  border: 1px solid var(--border);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  position: relative;
+  overflow: hidden;
+}
+.consult-panel::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--cyan), var(--gold), var(--cyan));
+  background-size: 200% 100%;
+  animation: consultShimmer 4s linear infinite;
+}
+@keyframes consultShimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+@media (prefers-reduced-motion: reduce) {
+  .consult-panel::before { animation: none; }
+}
+
+/* ── Header / progress ── */
+.consult-header {
+  padding: 2rem 2.5rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+.consult-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  color: var(--cyan);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.consult-eyebrow::before { content: '// '; }
+
+.consult-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--white);
+  margin-bottom: 1.5rem;
+  line-height: 1.3;
+}
+
+.consult-steps {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+.consult-step {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: var(--trans);
+}
+.consult-step-num {
+  width: 22px; height: 22px;
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: var(--trans);
+}
+.consult-step.is-active .consult-step-num {
+  border-color: var(--cyan);
+  color: var(--cyan);
+  background: rgba(0,200,232,0.08);
+}
+.consult-step.is-active { color: var(--white); }
+.consult-step.is-done .consult-step-num {
+  border-color: var(--cyan);
+  background: var(--cyan);
+  color: var(--navy);
+}
+.consult-step.is-done { color: var(--cyan); }
+.consult-step-track {
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+  position: relative;
+  overflow: hidden;
+}
+.consult-step-track::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: var(--cyan);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+.consult-step-track.is-filled::after { transform: scaleX(1); }
+
+/* ── Body / step panels ── */
+.consult-body {
+  padding: 2rem 2.5rem 2.5rem;
+  position: relative;
+}
+.consult-step-panel {
+  display: none;
+}
+.consult-step-panel.is-active {
+  display: block;
+  animation: consultFadeIn 0.35s ease;
+}
+@keyframes consultFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .consult-step-panel.is-active { animation: none; }
+}
+
+.consult-field-label {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--white);
+  display: block;
+  margin-bottom: 0.35rem;
+}
+.consult-field-hint {
+  font-size: 0.82rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+.consult-required { color: var(--gold); }
+
+/* priority checkboxes */
+.consult-priority-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  margin-bottom: 1.75rem;
+}
+@media (max-width: 560px) {
+  .consult-priority-grid { grid-template-columns: 1fr; }
+}
+.consult-priority {
+  position: relative;
+}
+.consult-priority input {
+  position: absolute;
+  opacity: 0;
+  width: 1px; height: 1px;
+}
+.consult-priority label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.02);
+  cursor: pointer;
+  transition: var(--trans);
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.45;
+}
+.consult-priority label:hover {
+  border-color: rgba(0,200,232,0.3);
+  color: var(--white);
+}
+.consult-priority-box {
+  width: 16px; height: 16px;
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+  margin-top: 2px;
+  position: relative;
+  transition: var(--trans);
+}
+.consult-priority-box::after {
+  content: '';
+  position: absolute;
+  left: 4px; top: 1px;
+  width: 5px; height: 8px;
+  border: solid var(--navy);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) scale(0);
+  transition: transform 0.15s ease;
+}
+.consult-priority input:checked + label {
+  border-color: var(--cyan);
+  background: rgba(0,200,232,0.06);
+  color: var(--white);
+}
+.consult-priority input:checked + label .consult-priority-box {
+  background: var(--cyan);
+  border-color: var(--cyan);
+}
+.consult-priority input:checked + label .consult-priority-box::after {
+  transform: rotate(45deg) scale(1);
+}
+.consult-priority input:focus-visible + label {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
+}
+
+.consult-error {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #f87171;
+  margin: -1.25rem 0 1.5rem;
+  min-height: 1em;
+}
+
+/* text inputs — reuses the same visual language as the existing contact form */
+.consult-input-group { margin-bottom: 1.25rem; }
+.consult-input-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 560px) {
+  .consult-input-row { grid-template-columns: 1fr; }
+}
+.consult-input,
+.consult-select {
+  width: 100%;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--border);
+  color: var(--white);
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 0.75rem 0.9rem;
+  transition: var(--trans);
+}
+.consult-input::placeholder { color: var(--muted); opacity: 0.7; }
+.consult-input:focus,
+.consult-select:focus {
+  outline: none;
+  border-color: var(--cyan);
+  background: rgba(0,200,232,0.04);
+}
+.consult-input.has-error,
+.consult-select.has-error { border-color: #f87171; }
+
+/* ── Footer / actions ── */
+.consult-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+.consult-btn-back {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.5rem 0;
+  transition: var(--trans);
+}
+.consult-btn-back:hover { color: var(--cyan); }
+.consult-btn-back:disabled { opacity: 0; pointer-events: none; }
+
+.consult-btn-next,
+.consult-btn-submit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--navy);
+  background: var(--cyan);
+  border: none;
+  padding: 0.8rem 1.5rem;
+  cursor: pointer;
+  clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+  transition: var(--trans);
+  margin-left: auto;
+}
+.consult-btn-next:hover,
+.consult-btn-submit:hover { background: var(--gold); }
+.consult-btn-next:disabled,
+.consult-btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+.consult-btn-next svg,
+.consult-btn-submit svg { transition: transform var(--trans); }
+.consult-btn-next:hover svg,
+.consult-btn-submit:hover svg { transform: translateX(3px); }
+
+/* ── Success state ── */
+.consult-success {
+  display: none;
+  text-align: center;
+  padding: 1rem 0 0.5rem;
+}
+.consult-success.is-active {
+  display: block;
+  animation: consultFadeIn 0.4s ease;
+}
+.consult-success-icon {
+  width: 44px; height: 44px;
+  margin: 0 auto 1.25rem;
+  border: 1px solid var(--cyan);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--cyan);
+  border-radius: 50%;
+}
+.consult-success-title {
+  font-size: 1.1rem;
+  color: var(--white);
+  margin-bottom: 0.5rem;
+}
+.consult-success-body {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.7;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+/* ── trust strip ── */
+.consult-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  padding: 1.25rem 2.5rem;
+  border-top: 1px solid var(--border);
+  background: rgba(255,255,255,0.015);
+}
+.consult-trust-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.consult-trust-item svg { color: var(--cyan); flex-shrink: 0; }
+
+@media (max-width: 600px) {
+  .consult-header, .consult-body { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .consult-trust { padding: 1.25rem 1.5rem; }
+  .consult-title { font-size: 1.15rem; }
+}
